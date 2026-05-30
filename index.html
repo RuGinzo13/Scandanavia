@@ -6,1387 +6,682 @@
 <title>Scandinavia Field Guide — Copenhagen · Bergen · Oslo</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1814;
-    --paper: #f5f0e8;
-    --paper-dark: #ede8dc;
-    --accent: #c8410a;
-    --accent-muted: #e8c4b0;
-    --muted: #7a7268;
-    --border: rgba(26,24,20,0.12);
-    --cph: #2b4a6f;
-    --bgn: #2a5c3f;
-    --osl: #6b2d4a;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    font-size: 15px;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 4rem 5vw 3rem;
-    background: var(--ink);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-texture {
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(ellipse at 20% 50%, rgba(43,74,111,0.35) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(42,92,63,0.25) 0%, transparent 55%),
-      radial-gradient(ellipse at 60% 80%, rgba(107,45,74,0.3) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(245,240,232,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245,240,232,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-  }
-
-  .hero-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent-muted);
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3.5rem, 9vw, 7rem);
-    font-weight: 900;
-    line-height: 0.92;
-    color: var(--paper);
-    position: relative;
-    margin-bottom: 2rem;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--accent-muted);
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    position: relative;
-    flex-wrap: wrap;
-  }
-
-  .hero-cities {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .city-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .city-pill:hover { opacity: 0.8; }
-  .pill-cph { background: var(--cph); color: #d6e4f5; }
-  .pill-bgn { background: var(--bgn); color: #c5e0d0; }
-  .pill-osl { background: var(--osl); color: #e8c5d5; }
-
-  .hero-desc {
-    color: rgba(245,240,232,0.55);
-    font-size: 13px;
-    max-width: 320px;
-    line-height: 1.6;
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    right: 5vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: rgba(245,240,232,0.35);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, transparent, rgba(245,240,232,0.35));
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
-  }
-
-  /* ── NAV ── */
-  .sticky-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: stretch;
-    height: 52px;
-  }
-
-  .nav-brand {
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--muted);
-    border-right: 1px solid var(--border);
-    white-space: nowrap;
-  }
-
-  .nav-tabs {
-    display: flex;
-    flex: 1;
-  }
-
-  .nav-tab {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-right: 1px solid var(--border);
-    transition: all 0.2s;
-    position: relative;
-  }
-
-  .nav-tab:last-child { border-right: none; }
-  .nav-tab:hover { color: var(--ink); background: var(--paper-dark); }
-
-  .nav-tab::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .nav-tab.tab-cph::after { background: var(--cph); }
-  .nav-tab.tab-bgn::after { background: var(--bgn); }
-  .nav-tab.tab-osl::after { background: var(--osl); }
-  .nav-tab:hover::after { opacity: 1; }
-
-  /* ── CITY SECTIONS ── */
-  .city-section {
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  .city-banner {
-    padding: 5rem 5vw 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .city-banner-cph { background: var(--cph); }
-  .city-banner-bgn { background: var(--bgn); }
-  .city-banner-osl { background: var(--osl); }
-
-  .city-banner::before {
-    content: attr(data-city);
-    position: absolute;
-    right: -2vw;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(6rem, 18vw, 14rem);
-    font-weight: 900;
-    color: rgba(255,255,255,0.06);
-    line-height: 1;
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  .banner-eyebrow {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 1rem;
-  }
-
-  .banner-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 900;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
-
-  .banner-tagline {
-    font-size: 14px;
-    color: rgba(255,255,255,0.65);
-    max-width: 480px;
-    line-height: 1.7;
-    font-style: italic;
-  }
-
-  /* ── CONTENT LAYOUT ── */
-  .city-content {
-    padding: 4rem 5vw;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 3rem 5vw;
-  }
-
-  .content-full { grid-column: 1 / -1; }
-  .content-half { grid-column: span 1; }
-  .content-wide { grid-column: span 2; }
-
-  /* ── SECTION HEADERS ── */
-  .section-head {
-    margin-bottom: 1.5rem;
-  }
-
-  .section-number {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.4rem;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-
-  .section-rule {
-    width: 32px;
-    height: 2px;
-    margin-top: 0.75rem;
-  }
-  .rule-cph { background: var(--cph); }
-  .rule-bgn { background: var(--bgn); }
-  .rule-osl { background: var(--osl); }
-
-  /* ── RESTAURANT CARDS ── */
-  .restaurant-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .resto-item {
-    display: flex;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-  }
-  .resto-item:last-child { border-bottom: none; }
-  .resto-item:hover { background: var(--paper-dark); }
-
-  .resto-tag {
-    width: 5px;
-    flex-shrink: 0;
-  }
-  .tag-fine { background: #8b6914; }
-  .tag-local { background: #2d6e2d; }
-  .tag-street { background: #b84a00; }
-  .tag-coffee { background: #5c3a1e; }
-  .tag-wine { background: #6b2d4a; }
-
-  .resto-body {
-    padding: 0.875rem 1rem;
-    flex: 1;
-  }
-
-  .resto-name {
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--ink);
-    margin-bottom: 2px;
-  }
-
-  .resto-meta {
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .resto-desc {
-    font-size: 13px;
-    color: var(--ink);
-    opacity: 0.75;
-    line-height: 1.5;
-  }
-
-  /* ── RULES SECTION ── */
-  .rules-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .rule-item {
-    background: var(--paper);
-    padding: 1.25rem;
-    transition: background 0.15s;
-  }
-  .rule-item:hover { background: var(--paper-dark); }
-
-  .rule-icon {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .rule-headline {
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-
-  .rule-text {
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  /* ── SPOTS CARDS ── */
-  .spots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-  }
-
-  .spot-card {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.1rem;
-    background: var(--paper);
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .spot-card:hover {
-    border-color: rgba(26,24,20,0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26,24,20,0.08);
-  }
-
-  .spot-type {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-  }
-
-  .spot-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-  }
-
-  .spot-desc {
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  /* ── TRAPS ── */
-  .traps-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .trap-card {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    background: rgba(200,65,10,0.06);
-    border: 1px solid rgba(200,65,10,0.2);
-    border-radius: 8px;
-    border-left: 3px solid var(--accent);
-  }
-
-  .trap-x {
-    font-size: 1rem;
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .trap-body {}
-  .trap-name {
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--ink);
-    margin-bottom: 3px;
-  }
-  .trap-desc {
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  /* ── SCENIC ── */
-  .scenic-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .scenic-card {
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 8px;
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s;
-  }
-  .scenic-card:hover { transform: translateY(-2px); }
-
-  .scenic-card-cph { background: var(--cph); }
-  .scenic-card-bgn { background: var(--bgn); }
-  .scenic-card-osl { background: var(--osl); }
-  .scenic-card-dark { background: var(--ink); }
-
-  .scenic-badge {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 0.5rem;
-  }
-
-  .scenic-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.4rem;
-    line-height: 1.2;
-  }
-
-  .scenic-desc {
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.6;
-  }
-
-  /* ── DIVIDERS ── */
-  .section-divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 3rem 0;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    color: rgba(245,240,232,0.4);
-    padding: 2rem 5vw;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: gap;
-  }
-
-  footer strong {
-    color: var(--paper);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-  }
-
-  @media (max-width: 900px) {
-    .content-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .content-wide, .content-half { grid-column: 1 / -1; }
-    .rules-grid { grid-template-columns: 1fr; }
-    .scenic-grid { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 600px) {
-    .hero-meta { flex-direction: column; align-items: flex-start; }
-    .nav-brand { display: none; }
-    .spots-grid { grid-template-columns: 1fr; }
-  }
+:root{--ink:#1a1814;--paper:#f5f0e8;--paper-dark:#ede8dc;--accent:#c8410a;--accent-muted:#e8c4b0;--muted:#7a7268;--border:rgba(26,24,20,0.12);--cph:#2b4a6f;--bgn:#2a5c3f;--osl:#6b2d4a}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif;font-weight:300;line-height:1.7;font-size:15px}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem 5vw 3rem;background:var(--ink);position:relative;overflow:hidden}
+.hero-texture{position:absolute;inset:0;background-image:radial-gradient(ellipse at 20% 50%,rgba(43,74,111,.35) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(42,92,63,.25) 0%,transparent 55%),radial-gradient(ellipse at 60% 80%,rgba(107,45,74,.3) 0%,transparent 50%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,240,232,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,240,232,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-muted);margin-bottom:1.5rem;position:relative}
+.hero-title{font-family:"Playfair Display",serif;font-size:clamp(3.5rem,9vw,7rem);font-weight:900;line-height:.92;color:var(--paper);position:relative;margin-bottom:2rem}
+.hero-title em{font-style:italic;color:var(--accent-muted)}
+.hero-meta{display:flex;gap:2rem;align-items:center;position:relative;flex-wrap:wrap}
+.hero-cities{display:flex;gap:1rem;flex-wrap:wrap}
+.city-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;letter-spacing:.06em;text-decoration:none;transition:opacity .2s}
+.city-pill:hover{opacity:.8}
+.pill-cph{background:var(--cph);color:#d6e4f5}
+.pill-bgn{background:var(--bgn);color:#c5e0d0}
+.pill-osl{background:var(--osl);color:#e8c5d5}
+.hero-desc{color:rgba(245,240,232,.55);font-size:13px;max-width:320px;line-height:1.6}
+.scroll-hint{position:absolute;bottom:2rem;right:5vw;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(245,240,232,.35);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,rgba(245,240,232,.35));animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
+.sticky-nav{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:1px solid var(--border);display:flex;align-items:stretch;height:52px}
+.nav-brand{padding:0 2rem;display:flex;align-items:center;font-family:"Playfair Display",serif;font-size:13px;font-style:italic;color:var(--muted);border-right:1px solid var(--border);white-space:nowrap}
+.nav-tabs{display:flex;flex:1}
+.nav-tab{flex:1;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--border);transition:all .2s;position:relative}
+.nav-tab:last-child{border-right:none}
+.nav-tab:hover{color:var(--ink);background:var(--paper-dark)}
+.nav-tab::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;opacity:0;transition:opacity .2s}
+.nav-tab.tab-cph::after{background:var(--cph)}
+.nav-tab.tab-bgn::after{background:var(--bgn)}
+.nav-tab.tab-osl::after{background:var(--osl)}
+.nav-tab:hover::after{opacity:1}
+/* HOTEL CARD */
+.hotel-card{margin-bottom:2.5rem;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.hotel-header{padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+.hotel-header-cph{background:var(--cph)}
+.hotel-header-bgn{background:var(--bgn)}
+.hotel-header-osl{background:var(--osl)}
+.hotel-label{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:4px}
+.hotel-name{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:700;color:#fff}
+.hotel-address{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px}
+.hotel-transport-pills{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}
+.transport-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:100px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,.85);white-space:nowrap}
+.hotel-body{padding:1.25rem 1.5rem;background:var(--paper)}
+.hotel-context{font-size:13.5px;color:var(--ink);line-height:1.65;margin-bottom:1rem}
+.hotel-context strong{font-weight:500}
+.proximity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.prox-item{background:var(--paper-dark);border-radius:6px;padding:.6rem .8rem}
+.prox-place{font-size:12.5px;font-weight:500;color:var(--ink)}
+.prox-dist{font-size:11px;color:var(--muted);margin-top:1px}
+.city-section{min-height:100vh;padding:0}
+.city-banner{padding:5rem 5vw 3rem;position:relative;overflow:hidden}
+.city-banner-cph{background:var(--cph)}
+.city-banner-bgn{background:var(--bgn)}
+.city-banner-osl{background:var(--osl)}
+.city-banner::before{content:attr(data-city);position:absolute;right:-2vw;top:50%;transform:translateY(-50%);font-family:"Playfair Display",serif;font-size:clamp(6rem,18vw,14rem);font-weight:900;color:rgba(255,255,255,.06);line-height:1;pointer-events:none;white-space:nowrap}
+.banner-eyebrow{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:1rem}
+.banner-name{font-family:"Playfair Display",serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:900;color:#fff;line-height:1;margin-bottom:1rem}
+.banner-tagline{font-size:14px;color:rgba(255,255,255,.65);max-width:480px;line-height:1.7;font-style:italic}
+.city-content{padding:4rem 5vw;max-width:1400px;margin:0 auto}
+.content-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem 5vw}
+.content-full{grid-column:1/-1}
+.content-half{grid-column:span 1}
+.content-wide{grid-column:span 2}
+.section-head{margin-bottom:1.5rem}
+.section-number{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.section-title{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1.2}
+.section-rule{width:32px;height:2px;margin-top:.75rem}
+.rule-cph{background:var(--cph)}
+.rule-bgn{background:var(--bgn)}
+.rule-osl{background:var(--osl)}
+.restaurant-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.resto-item{display:flex;gap:0;border-bottom:1px solid var(--border);transition:background .15s}
+.resto-item:last-child{border-bottom:none}
+.resto-item:hover{background:var(--paper-dark)}
+.resto-tag{width:5px;flex-shrink:0}
+.tag-fine{background:#8b6914}
+.tag-local{background:#2d6e2d}
+.tag-street{background:#b84a00}
+.tag-coffee{background:#5c3a1e}
+.tag-wine{background:#6b2d4a}
+.resto-body{padding:.875rem 1rem;flex:1}
+.resto-name{font-weight:500;font-size:14px;color:var(--ink);margin-bottom:2px}
+.resto-meta{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.resto-dist{font-size:11px;color:var(--accent);font-weight:500;letter-spacing:0;text-transform:none;white-space:nowrap}
+.resto-desc{font-size:13px;color:var(--ink);opacity:.75;line-height:1.5}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.rule-item{background:var(--paper);padding:1.25rem;transition:background .15s}
+.rule-item:hover{background:var(--paper-dark)}
+.rule-icon{font-size:1.25rem;margin-bottom:.5rem;display:block}
+.rule-headline{font-weight:500;font-size:13px;color:var(--ink);margin-bottom:4px}
+.rule-text{font-size:12.5px;color:var(--muted);line-height:1.55}
+.spots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.spot-card{border:1px solid var(--border);border-radius:8px;padding:1.1rem;background:var(--paper);transition:all .2s;position:relative;overflow:hidden}
+.spot-card:hover{border-color:rgba(26,24,20,.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,24,20,.08)}
+.spot-type{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.spot-name{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;line-height:1.2}
+.spot-desc{font-size:12.5px;color:var(--muted);line-height:1.55}
+.traps-list{display:flex;flex-direction:column;gap:10px}
+.trap-card{display:flex;gap:1rem;padding:1rem 1.25rem;background:rgba(200,65,10,.06);border:1px solid rgba(200,65,10,.2);border-radius:8px;border-left:3px solid var(--accent)}
+.trap-x{font-size:1rem;color:var(--accent);flex-shrink:0;margin-top:1px}
+.trap-name{font-weight:500;font-size:13px;color:var(--ink);margin-bottom:3px}
+.trap-desc{font-size:12.5px;color:var(--muted);line-height:1.55}
+.scenic-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scenic-card{background:var(--ink);color:var(--paper);border-radius:8px;padding:1.5rem;position:relative;overflow:hidden;transition:transform .2s}
+.scenic-card:hover{transform:translateY(-2px)}
+.scenic-card-cph{background:var(--cph)}
+.scenic-card-bgn{background:var(--bgn)}
+.scenic-card-osl{background:var(--osl)}
+.scenic-card-dark{background:var(--ink)}
+.scenic-badge{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.4rem}
+.scenic-name{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.25rem;line-height:1.2}
+.scenic-dist{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:.4rem;font-weight:500}
+.scenic-desc{font-size:12px;color:rgba(255,255,255,.65);line-height:1.6}
+.section-divider{border:none;border-top:1px solid var(--border);margin:3rem 0}
+footer{background:var(--ink);color:rgba(245,240,232,.4);padding:2rem 5vw;font-size:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer strong{color:var(--paper);font-family:"Playfair Display",serif;font-style:italic}
+@media(max-width:900px){.content-grid{grid-template-columns:1fr;gap:2.5rem}.content-wide,.content-half{grid-column:1/-1}.rules-grid{grid-template-columns:1fr}.scenic-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.hero-meta{flex-direction:column;align-items:flex-start}.nav-brand{display:none}.spots-grid{grid-template-columns:1fr}.proximity-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 
-<!-- ═══ HERO ═══ -->
 <section class="hero">
-  <div class="hero-texture"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-label">Field Guide · 2025–2026</div>
-  <h1 class="hero-title">Scandinavia<br><em>Unfiltered</em></h1>
-  <div class="hero-meta">
-    <div class="hero-cities">
-      <a href="#copenhagen" class="city-pill pill-cph">🇩🇰 Copenhagen</a>
-      <a href="#bergen" class="city-pill pill-bgn">🇳🇴 Bergen</a>
+<div class="hero-texture"></div><div class="hero-grid"></div>
+<div class="hero-label">Field Guide · 2025–2026</div>
+<h1 class="hero-title">Scandinavia<br><em>Unfiltered</em></h1>
+<div class="hero-meta">
+<div class="hero-cities">
+<a href="#copenhagen" class="city-pill pill-cph">🇩🇰 Copenhagen</a>
+<a href="#bergen" class="city-pill pill-bgn">🇳🇴 Bergen</a>
+<a href="#flam" class="city-pill" style="background:#4a3520;color:#e8d5b0;">🏔️ Flåm</a>
       <a href="#oslo" class="city-pill pill-osl">🇳🇴 Oslo</a>
-    </div>
-    <p class="hero-desc">Where locals eat, what tourists miss, and the unwritten rules you need before you land.</p>
-  </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
+</div>
+<p class="hero-desc">Where locals eat, what tourists miss, and the unwritten rules you need — June 26 – July 8, 2026. Tailored to your hotels and your exact dates.</p>
+</div>
+<div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<!-- ═══ STICKY NAV ═══ -->
 <nav class="sticky-nav">
-  <div class="nav-brand">Scandinavia Field Guide</div>
-  <div class="nav-tabs">
-    <a href="#copenhagen" class="nav-tab tab-cph">Copenhagen</a>
-    <a href="#bergen" class="nav-tab tab-bgn">Bergen</a>
-    <a href="#oslo" class="nav-tab tab-osl">Oslo</a>
-  </div>
+<div class="nav-brand">Scandinavia Field Guide</div>
+<div class="nav-tabs">
+<a href="#copenhagen" class="nav-tab tab-cph">Copenhagen</a>
+<a href="#bergen" class="nav-tab tab-bgn">Bergen</a>
+<a href="#flam" class="nav-tab" style="font-size:11px;" onmouseover="this.style.borderBottomColor='#4a3520'" onmouseout="this.style.borderBottomColor='transparent'">Flåm</a><a href="#oslo" class="nav-tab tab-osl">Oslo</a>
+</div>
 </nav>
+<!-- ITINERARY STRIP -->
+<div style="background:var(--ink);padding:1.25rem 5vw;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+  <div style="display:flex;gap:0;min-width:700px;border:1px solid rgba(245,240,232,0.12);border-radius:8px;overflow:hidden;">
+    <div style="flex:0 0 auto;padding:0.6rem 1rem;background:rgba(200,65,10,0.25);border-right:1px solid rgba(245,240,232,0.1);display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.45);">Fri Jun 26</div>
+      <div style="font-size:12px;font-weight:500;color:#e8c4b0;">Red Eye ✈️</div>
+    </div>
+    <div style="flex:1;padding:0.6rem 1rem;background:rgba(43,74,111,0.4);border-right:1px solid rgba(245,240,232,0.1);display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.45);">Sat–Mon Jun 27–29 · 3 nights</div>
+      <div style="font-size:12px;font-weight:500;color:#d6e4f5;">Copenhagen — NH Collection</div>
+    </div>
+    <div style="flex:1;padding:0.6rem 1rem;background:rgba(42,92,63,0.4);border-right:1px solid rgba(245,240,232,0.1);display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.45);">Tue–Thu Jun 30–Jul 2 · 3 nights</div>
+      <div style="font-size:12px;font-weight:500;color:#c5e0d0;">Bergen — Hotel No. 13 <span style="color:#ffd700;font-size:10px;">★ Thu = raspeballer</span></div>
+    </div>
+    <div style="flex:0 0 auto;padding:0.6rem 1rem;background:rgba(107,45,74,0.3);border-right:1px solid rgba(245,240,232,0.1);display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.45);">Fri Jul 3 · 1 night</div>
+      <div style="font-size:12px;font-weight:500;color:#e8c5d5;">Flåm — Flåmsbrygga</div>
+    </div>
+    <div style="flex:1;padding:0.6rem 1rem;background:rgba(107,45,74,0.4);display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.45);">Sat–Tue Jul 4–7 · 4 nights</div>
+      <div style="font-size:12px;font-weight:500;color:#e8c5d5;">Oslo — Hotel Continental</div>
+    </div>
+  </div>
+  <div style="margin-top:0.6rem;font-size:11px;color:rgba(245,240,232,0.35);letter-spacing:0.05em;">Late June / early July · Peak summer · Sunset ~10:30–11pm · All outdoor activities open</div>
+</div>
+
+<!-- SEASONAL STYLES -->
+<style>
+.seasonal-alert{padding:1rem 1.25rem;border-radius:8px;margin-bottom:1.5rem;font-size:13px;line-height:1.6;display:flex;gap:0.75rem;align-items:flex-start;}
+.seasonal-alert-sun{background:rgba(255,200,50,0.1);border:1px solid rgba(255,200,50,0.3);}
+.seasonal-alert-warn{background:rgba(200,65,10,0.08);border:1px solid rgba(200,65,10,0.25);}
+.seasonal-alert-pin{background:rgba(43,74,111,0.1);border:1px solid rgba(43,74,111,0.25);}
+.sa-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+.sa-title{font-weight:500;color:var(--ink);margin-bottom:2px;}
+.sa-text{color:var(--muted);}
+.day-badge{display:inline-block;background:var(--ink);color:var(--paper);font-size:10px;font-weight:500;letter-spacing:0.1em;padding:2px 7px;border-radius:4px;margin-right:4px;text-transform:uppercase;vertical-align:middle;}
+.day-badge-gold{background:#b8860b;color:#fff;}
+.day-badge-blue{background:var(--cph);color:#d6e4f5;}
+.day-badge-green{background:var(--bgn);color:#c5e0d0;}
+.day-badge-purple{background:var(--osl);color:#e8c5d5;}
+</style>
 
 
-<!-- ═══════════════════════════════════
-     COPENHAGEN
-════════════════════════════════════ -->
+
+<!-- COPENHAGEN -->
 <section class="city-section" id="copenhagen">
-  <div class="city-banner city-banner-cph" data-city="CPH">
-    <div class="banner-eyebrow">Chapter 01 — Denmark</div>
-    <h2 class="banner-name">Copenhagen</h2>
-    <p class="banner-tagline">New Nordic birthplace. Cycling city. The food capital of the Nordics where hygge is a way of life, not a marketing concept.</p>
-  </div>
+<div class="city-banner city-banner-cph" data-city="CPH">
+<div class="banner-eyebrow">Chapter 01 — Denmark</div>
+<h2 class="banner-name">Copenhagen</h2>
+<p class="banner-tagline">New Nordic birthplace. Cycling city. The food capital of the Nordics — and your hotel puts you right in the thick of it.</p>
+</div>
+<div class="city-content"><div class="content-grid">
 
-  <div class="city-content">
-    <div class="content-grid">
+<div class="content-full">
+<div class="hotel-card">
+<div class="hotel-header hotel-header-cph">
+<div>
+<div class="hotel-label">Your hotel · Copenhagen</div>
+<div class="hotel-name">NH Collection Copenhagen</div>
+<div class="hotel-address">Strandgade 7, Christianshavn &nbsp;·&nbsp; Metro: Christianshavn M1/M2 (300m)</div>
+</div>
+<div class="hotel-transport-pills">
+<span class="transport-pill">🚇 M2 to airport 15 min</span>
+<span class="transport-pill">🚇 Metro city center 2 stops</span>
+<span class="transport-pill">🚤 Water bus from hotel dock</span>
+<span class="transport-pill">🚲 Bike rental at hotel</span>
+</div>
+</div>
+<div class="hotel-body">
+<p class="hotel-context">You're in <strong>Christianshavn</strong> — the canal district directly across the harbor from the old city. Excellent base: Nyhavn is a 10-min walk, Christiania is 5 min on foot, Vor Frelsers Kirke is 8 min. Refshaleøen — Alchemist and Copenhagen Contemporary — is a 15-min bike ride or short water bus hop from the hotel dock. The Christianshavn metro puts the entire M1/M2 network at your feet. The rooftop bar ROOF (April–October) is worth using for sunset drinks — skip the tourist bars nearby.</p>
+<div class="proximity-grid">
+<div class="prox-item"><div class="prox-place">Christiania</div><div class="prox-dist">5 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Vor Frelsers Kirke</div><div class="prox-dist">8 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Nyhavn</div><div class="prox-dist">10 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Islands Brygge Harbour Bath</div><div class="prox-dist">10 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Torvehallerne</div><div class="prox-dist">15 min by metro</div></div>
+<div class="prox-item"><div class="prox-place">Refshaleøen / Alchemist</div><div class="prox-dist">15 min by bike or water bus</div></div>
+<div class="prox-item"><div class="prox-place">Nørrebro (Selma, bakeries)</div><div class="prox-dist">20 min by metro</div></div>
+<div class="prox-item"><div class="prox-place">Kødbyen nightlife</div><div class="prox-dist">25 min by metro or bike</div></div>
+<div class="prox-item"><div class="prox-place">Alice Ice Cream (Amager)</div><div class="prox-dist">15 min by M4</div></div>
+<div class="prox-item"><div class="prox-place">Copenhagen Airport (CPH)</div><div class="prox-dist">15–20 min by M2</div></div>
+</div>
+</div>
+</div>
+</div>
 
-      <!-- FOOD -->
-      <div class="content-full">
-        <div class="section-head">
-          <div class="section-number">01 — Food</div>
-          <h3 class="section-title">Where to eat</h3>
-          <div class="section-rule rule-cph"></div>
-        </div>
-        <div class="restaurant-list">
-          <div class="resto-item">
-            <div class="resto-tag tag-fine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Fine Dining · Refshaleøen</div>
-              <div class="resto-name">Alchemist</div>
-              <div class="resto-desc">50-course immersive experience in a converted shipyard. Part art installation, part dinner. Two Michelin stars + Michelin green star. World's Top 10. Book months ahead — no walk-ins.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Local Favorite · Nørrebro</div>
-              <div class="resto-name">Selma</div>
-              <div class="resto-desc">Heavenly smørrebrød in Copenhagen's coolest neighborhood. Proper open-faced Danish lunch. Not a tourist trap. Go for lunch service.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Local Favorite · Near Nyhavn</div>
-              <div class="resto-name">Told & Snaps</div>
-              <div class="resto-desc">Around the corner from Nyhavn. Proper Danish food without the tourist markup. The answer to "where do locals eat near the waterfront?" — and they don't eat on Nyhavn.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-street"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Street Food Market · Waterfront</div>
-              <div class="resto-name">Reffen</div>
-              <div class="resto-desc">Open-air street food market on the harbor. The real local summer gathering spot — not Nyhavn's overpriced restaurant strip. Open May–September only.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Community Dining · Vesterbro</div>
-              <div class="resto-name">Absalon</div>
-              <div class="resto-desc">Communal dinner in a converted church. Sit next to strangers, share food, pay very little. Genuinely local, cheap, and social. Completely unlike anything else in the city.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Bakeries · Nørrebro</div>
-              <div class="resto-name">Jægersborggade bakeries</div>
-              <div class="resto-desc">An entire street lined with indie bakeries. Get there before 9am. Order a bolle med ost (cheese bun) or cardamom roll. This is how locals do breakfast — not hotel buffets.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Food Market · Nørreport</div>
-              <div class="resto-name">Torvehallerne</div>
-              <div class="resto-desc">Covered food hall. Best fresh produce, flowers, smørrebrød, seasonal Danish food. Locals shop here daily. Slightly touristy but the quality is legitimate.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-coffee"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Coffee · Vesterbro</div>
-              <div class="resto-name">Prolog Coffee Bar</div>
-              <div class="resto-desc">Morning coffee ritual for locals. Small, serious, excellent. Not a chain, not a concept — just exceptional coffee. Go early.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Hidden Gem · Amager</div>
-              <div class="resto-name">Alice Ice Cream & Coffee</div>
-              <div class="resto-desc">Tucked in Amager — a neighborhood tourists don't reach. Locals-only reputation. Waffle cones made in-house. Ice cream available all day since 2024 (previously seasonal only). The vanilla with real bean is definitive.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="content-full">
+<div class="section-head"><div class="section-number">01 — Food</div><h3 class="section-title">Where to eat</h3><div class="section-rule rule-cph"></div></div>
+<div class="restaurant-list">
+<div class="resto-item"><div class="resto-tag tag-fine"></div><div class="resto-body"><div class="resto-meta"><span>Fine Dining · Refshaleøen</span><span class="resto-dist">15 min · bike or water bus from hotel</span></div><div class="resto-name">Alchemist</div><div class="resto-desc">50-course immersive experience in a converted shipyard. Two Michelin stars. World's Top 10. Book months ahead. From the hotel, take the water bus from the dock or cycle the harbor path — arriving by water is worth it.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Local Favorite · Nørrebro</span><span class="resto-dist">20 min · metro from Christianshavn</span></div><div class="resto-name">Selma</div><div class="resto-desc">Heavenly smørrebrød in Copenhagen's coolest neighborhood. Proper open-faced Danish lunch. Take M1 from Christianshavn — or bike directly over the bridges in about 25 min.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Local Favorite · Near Nyhavn</span><span class="resto-dist">12 min walk from hotel</span></div><div class="resto-name">Told & Snaps</div><div class="resto-desc">Around the corner from Nyhavn — which you'll walk past getting here from the hotel. Proper Danish food without the tourist markup. The real answer to where locals eat near the waterfront.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-street"></div><div class="resto-body"><div class="resto-meta"><span>Street Food Market · Refshaleøen</span><span class="resto-dist">15 min · bike from hotel</span></div><div class="resto-name">Reffen</div><div class="resto-desc">Open-air street food market on the harbor. Pair with Alchemist or Copenhagen Contemporary — make a half-day of Refshaleøen. Open May–September only.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Community Dining · Vesterbro</span><span class="resto-dist">25 min · metro to København H</span></div><div class="resto-name">Absalon</div><div class="resto-desc">Communal dinner in a converted church. Sit next to strangers, share food, pay very little. Genuinely local and social. Take the metro to København H then walk 10 min.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Bakeries · Nørrebro</span><span class="resto-dist">20 min · metro</span></div><div class="resto-name">Jægersborggade bakeries</div><div class="resto-desc">A full street of indie bakeries. Before 9am only. Order a bolle med ost or cardamom roll. Worth the metro ride for a proper local breakfast — don't settle for the hotel buffet every day.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Food Market · Nørreport</span><span class="resto-dist">10 min · metro (2 stops)</span></div><div class="resto-name">Torvehallerne</div><div class="resto-desc">Covered food hall at Nørreport station. Two metro stops from Christianshavn. Best smørrebrød, fresh produce, and seasonal Danish food. Go for lunch.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-coffee"></div><div class="resto-body"><div class="resto-meta"><span>Coffee · Vesterbro</span><span class="resto-dist">25 min · metro or bike</span></div><div class="resto-name">Prolog Coffee Bar</div><div class="resto-desc">Morning coffee ritual for locals. Small, serious, excellent. Make it a detour on the way to Kødbyen for an evening out in Vesterbro.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Hidden Gem · Amager</span><span class="resto-dist">15 min · M4 from Christianshavn</span></div><div class="resto-name">Alice Ice Cream & Coffee</div><div class="resto-desc">Tucked in Amager — tourists don't reach here. The M4 runs from Christianshavn directly (one stop). Locals-only reputation. Waffle cones made in-house. Vanilla with real bean is definitive.</div></div></div>
+</div>
+</div>
 
-      <!-- UNWRITTEN RULES -->
-      <div class="content-full">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">02 — Behavior</div>
-          <h3 class="section-title">Unwritten rules</h3>
-          <div class="section-rule rule-cph"></div>
-        </div>
-        <div class="rules-grid">
-          <div class="rule-item">
-            <span class="rule-icon">🚲</span>
-            <div class="rule-headline">Bike lanes are sacred</div>
-            <div class="rule-text">Never walk in them, stop in them, or drift into them. Signal before turning. Cycle right. Locals will not hide their frustration — and they'll be right.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">↗</span>
-            <div class="rule-headline">Stand right on escalators</div>
-            <div class="rule-text">Left lane is for walking. Non-negotiable in the metro. This is a commuter city — you will cause genuine inconvenience.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">💳</span>
-            <div class="rule-headline">Tipping is not expected</div>
-            <div class="rule-text">Service is baked into wages. Rounding up 5–10% for exceptional service is appreciated. Never obligatory. Don't perform American tipping culture here.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🐢</span>
-            <div class="rule-headline">Service is intentionally unhurried</div>
-            <div class="rule-text">Waitstaff aren't ignoring you — they're paid a living wage and aren't hustling for tips. Don't wave them down aggressively. The pace is the point.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">💧</span>
-            <div class="rule-headline">Tap water is excellent</div>
-            <div class="rule-text">Among the best in the world. Asking for bottled water in a restaurant is a tell. Just ask for tap — it's free and expected.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">💰</span>
-            <div class="rule-headline">Cash is nearly dead</div>
-            <div class="rule-text">Card everywhere, including street vendors and market stalls. Don't bother getting DKK beyond a very small emergency buffer.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">☀️</span>
-            <div class="rule-headline">When sun appears, go outside immediately</div>
-            <div class="rule-text">Parks fill in minutes. Locals drop everything. Don't be the tourist sitting in a café when Kongens Have is packed with Copenhageners celebrating actual daylight.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🏊</span>
-            <div class="rule-headline">Harbor swimming is local institution</div>
-            <div class="rule-text">The water is monitored and clean. Locals swim off the piers all summer. Do it. The harbour baths are some of the best free things in the city.</div>
-          </div>
-        </div>
-      </div>
+<div class="content-full">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">02 — Behavior</div><h3 class="section-title">Unwritten rules</h3><div class="section-rule rule-cph"></div></div>
+<div class="rules-grid">
+<div class="rule-item"><span class="rule-icon">🚲</span><div class="rule-headline">Bike lanes are sacred</div><div class="rule-text">Never walk in them, stop in them, or drift into them. Signal before turning. Cycle right. The hotel rents bikes — use them. You'll use Christianshavn's lanes daily.</div></div>
+<div class="rule-item"><span class="rule-icon">↗</span><div class="rule-headline">Stand right on escalators</div><div class="rule-text">Left lane is for walking. Non-negotiable at Christianshavn metro. Get this right from day one — you'll use it every time you leave the hotel.</div></div>
+<div class="rule-item"><span class="rule-icon">💳</span><div class="rule-headline">Tipping is not expected</div><div class="rule-text">Service is baked into wages. Rounding up 5–10% for exceptional service is appreciated. Never obligatory. Don't perform American tipping culture here.</div></div>
+<div class="rule-item"><span class="rule-icon">🐢</span><div class="rule-headline">Service is intentionally unhurried</div><div class="rule-text">Waitstaff aren't ignoring you — they're paid a living wage and don't hustle for tips. Don't wave them down aggressively. The pace is the point.</div></div>
+<div class="rule-item"><span class="rule-icon">💧</span><div class="rule-headline">Tap water is excellent</div><div class="rule-text">Among the best in the world. Asking for bottled water is a tell. Ask for tap — it's free and expected everywhere.</div></div>
+<div class="rule-item"><span class="rule-icon">💰</span><div class="rule-headline">Cash is nearly dead</div><div class="rule-text">Card everywhere, including street vendors. Don't bother getting DKK beyond a very small emergency buffer.</div></div>
+<div class="rule-item"><span class="rule-icon">☀️</span><div class="rule-headline">When sun appears, go outside immediately</div><div class="rule-text">Parks fill in minutes. Locals drop everything. You're steps from the harbor — join them. Don't be the tourist inside when Copenhageners are celebrating actual daylight.</div></div>
+<div class="rule-item"><span class="rule-icon">🏊</span><div class="rule-headline">Harbour swimming is a local institution</div><div class="rule-text">Water is monitored and clean. Islands Brygge Harbour Bath is a 10-min walk from the hotel. Public, free, and one of the best experiences in the city.</div></div>
+</div>
+</div>
 
-      <!-- LOCAL SPOTS -->
-      <div class="content-full">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">03 — Neighborhoods</div>
-          <h3 class="section-title">Local, non-touristy spots</h3>
-          <div class="section-rule rule-cph"></div>
-        </div>
-        <div class="spots-grid">
-          <div class="spot-card">
-            <div class="spot-type">Neighborhood</div>
-            <div class="spot-name">Nørrebro</div>
-            <div class="spot-desc">Copenhagen's most diverse, creative neighborhood. Named Time Out's coolest neighborhood in the world. Go here for dinner and evening drinks — not Nyhavn.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Nightlife District</div>
-            <div class="spot-name">Kødbyen</div>
-            <div class="spot-desc">Vesterbro's old meatpacking district. Now the city's food-and-nightlife hub. Where locals actually go Thursday–Saturday nights. Not pretty. Very real.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Hidden Beach</div>
-            <div class="spot-name">Sydhavnstippen</div>
-            <div class="spot-desc">Small beach with sheep and alpacas in the southern harbor. M4 metro, then 15 min walk. Bizarre, wonderful, completely local. No tourists.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Cemetery-Park</div>
-            <div class="spot-name">Assistens Kirkegaard</div>
-            <div class="spot-desc">Locals picnic, jog, and sunbathe here. Kierkegaard and H.C. Andersen are buried here. Not morbid — just a beautiful park that happens to have gravestones.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Former Shipyard</div>
-            <div class="spot-name">Refshaleøen</div>
-            <div class="spot-desc">Old shipyard hosting Alchemist, street food, saunas, and studios. Not yet fully touristified. Reach by bike along the harbor for the full experience.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Architecture</div>
-            <div class="spot-name">CopenHill</div>
-            <div class="spot-desc">A waste-to-energy plant with a ski slope and hiking trail on the roof. Completely free to hike up. One of the best views in the city and almost no one knows it.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Sauna Culture</div>
-            <div class="spot-name">Harbour Saunas</div>
-            <div class="spot-desc">Public saunas along the waterfront with cold-plunge access to the harbor. A genuine Copenhagen ritual. Book ahead in summer or arrive when they open.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Deer Park</div>
-            <div class="spot-name">Dyrehaven</div>
-            <div class="spot-desc">Vast deer park north of the city. Hundreds of deer roaming free. Afternoon walk in here beats most of the city's museums. November Hubertusjagt horse race is worth timing around.</div>
-          </div>
-        </div>
-      </div>
+<div class="content-full">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">03 — Local Spots</div><h3 class="section-title">Non-touristy spots</h3><div class="section-rule rule-cph"></div></div>
+<div class="spots-grid">
+<div class="spot-card"><div class="spot-type">Your neighborhood</div><div class="spot-name">Christianshavn</div><div class="spot-desc">You're based here. Canals, galleries, independent cafés, Christiania on the doorstep. Explore it on foot in the morning before day trips — most tourists come here rather than stay here.</div></div>
+<div class="spot-card"><div class="spot-type">Neighborhood · 20 min metro</div><div class="spot-name">Nørrebro</div><div class="spot-desc">Copenhagen's most creative, diverse area. Time Out's coolest neighborhood globally. Best destination for dinner and evening drinks — not Nyhavn.</div></div>
+<div class="spot-card"><div class="spot-type">Nightlife District · 25 min</div><div class="spot-name">Kødbyen</div><div class="spot-desc">Vesterbro's meatpacking district turned food-and-nightlife hub. Where locals go Thursday–Saturday nights. Metro to København H, then 10-min walk.</div></div>
+<div class="spot-card"><div class="spot-type">Hidden Beach · 15 min M4</div><div class="spot-name">Sydhavnstippen</div><div class="spot-desc">Small beach with sheep and alpacas. The M4 runs from Christianshavn directly — one stop toward København SV, then 15 min walk. Bizarre, wonderful, no tourists.</div></div>
+<div class="spot-card"><div class="spot-type">Cemetery-Park · 20 min</div><div class="spot-name">Assistens Kirkegaard</div><div class="spot-desc">Locals picnic and sunbathe here. Kierkegaard and H.C. Andersen are buried here. Not morbid — just a beautiful park. Bike or metro to Nørrebro.</div></div>
+<div class="spot-card"><div class="spot-type">Former Shipyard · 15 min bike</div><div class="spot-name">Refshaleøen</div><div class="spot-desc">Old shipyard with Alchemist, street food, saunas, studios. Cycle along the harbor from the hotel past the Opera House — the route is part of the experience.</div></div>
+<div class="spot-card"><div class="spot-type">Architecture · 20 min bike</div><div class="spot-name">CopenHill</div><div class="spot-desc">Waste-to-energy plant with a ski slope on the roof. Free to hike up. One of the best city views. Cycle there via Refshaleøen for a full harbor loop.</div></div>
+<div class="spot-card"><div class="spot-type">Harbour Bath · 10 min walk</div><div class="spot-name">Islands Brygge</div><div class="spot-desc">Public harbour bath with pools and diving boards. 10-min walk along the waterfront from the hotel. One of Copenhagen's best free experiences. Bring a towel.</div></div>
+</div>
+</div>
 
-      <!-- MUST SEE -->
-      <div class="content-wide">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">04 — Sights</div>
-          <h3 class="section-title">What to actually see</h3>
-          <div class="section-rule rule-cph"></div>
-        </div>
-        <div class="scenic-grid">
-          <div class="scenic-card scenic-card-cph">
-            <div class="scenic-badge">Best view</div>
-            <div class="scenic-name">Vor Frelsers Kirke</div>
-            <div class="scenic-desc">Spiraling external staircase to the best panoramic view in Copenhagen. Closes when wet — check weather before going. Book ahead online.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Fortress</div>
-            <div class="scenic-name">Kastellet</div>
-            <div class="scenic-desc">Star-shaped fortress still in military use. Free to walk around. Beautiful and uncrowded, especially early morning. Far better than the Little Mermaid nearby.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Culture</div>
-            <div class="scenic-name">Freetown Christiania</div>
-            <div class="scenic-desc">Self-governing community in central Copenhagen. A city within the city operating on its own rules. Don't photograph Pusher Street. Follow their posted rules.</div>
-          </div>
-          <div class="scenic-card scenic-card-cph">
-            <div class="scenic-badge">Contemporary Art</div>
-            <div class="scenic-name">Copenhagen Contemporary</div>
-            <div class="scenic-desc">Massive, impressive art space in Refshaleøen that locals sleep on. Don't make the same mistake. Worth pairing with a visit to Alchemist in the same area.</div>
-          </div>
-        </div>
-      </div>
+<div class="content-wide">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">04 — Sights</div><h3 class="section-title">What to actually see</h3><div class="section-rule rule-cph"></div></div>
+<div class="scenic-grid">
+<div class="scenic-card scenic-card-cph"><div class="scenic-badge">Best view</div><div class="scenic-name">Vor Frelsers Kirke</div><div class="scenic-dist">8 min walk from hotel</div><div class="scenic-desc">Spiraling external staircase to the best panoramic view in Copenhagen. You can see your hotel from the top. Closes when wet — check weather first. Book online.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Fortress</div><div class="scenic-name">Kastellet</div><div class="scenic-dist">20 min walk via Nyhavn</div><div class="scenic-desc">Star-shaped fortress still in military use. Free to walk. Beautiful and uncrowded early morning. Far better than the Little Mermaid 200m away. Make it part of a Nyhavn morning loop from the hotel.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Culture</div><div class="scenic-name">Freetown Christiania</div><div class="scenic-dist">5 min walk from hotel</div><div class="scenic-desc">Self-governing community right next to the hotel. A city within the city. Don't photograph Pusher Street. Follow their posted rules. Visit in the evening when it's liveliest.</div></div>
+<div class="scenic-card scenic-card-cph"><div class="scenic-badge">Contemporary Art</div><div class="scenic-name">Copenhagen Contemporary</div><div class="scenic-dist">15 min by bike — same trip as Alchemist</div><div class="scenic-desc">Massive art space in Refshaleøen. Pair with Reffen and Alchemist on the same day. Cycle over from the hotel along the harbor path.</div></div>
+</div>
+</div>
 
-      <!-- TRAPS -->
-      <div class="content-half">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">05 — Avoid</div>
-          <h3 class="section-title">Tourist traps</h3>
-          <div class="section-rule rule-cph"></div>
-        </div>
-        <div class="traps-list">
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">The Little Mermaid</div>
-              <div class="trap-desc">A small bronze statue on a rock. Universally agreed to be underwhelming. See Kastellet 200 meters away — actually beautiful, actually free, actually interesting.</div>
-            </div>
-          </div>
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Nyhavn restaurants</div>
-              <div class="trap-desc">The colorful houses are iconic — see them before 10am before crowds arrive. The restaurants on the canal are overpriced and generic. Grab a drink, eat somewhere else.</div>
-            </div>
-          </div>
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Strøget shopping</div>
-              <div class="trap-desc">Europe's longest pedestrian shopping street. Every store on it is an international chain. Skip it. Go to Nørrebro's independent boutiques on Jægersborggade instead.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="content-half">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">05 — Avoid</div><h3 class="section-title">Tourist traps</h3><div class="section-rule rule-cph"></div></div>
+<div class="traps-list">
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">The Little Mermaid</div><div class="trap-desc">A small bronze statue on a rock. Universally underwhelming. See Kastellet 200m away — actually beautiful, free, and interesting. Same walk from Nyhavn.</div></div></div>
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Nyhavn restaurants</div><div class="trap-desc">The colorful houses are worth seeing before 10am. The restaurants on the canal are overpriced. You're nearby — walk to Told & Snaps instead.</div></div></div>
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Strøget shopping</div><div class="trap-desc">Europe's longest pedestrian street — all international chains. Skip it. Nørrebro's Jægersborggade has actual independent shops worth your time.</div></div></div>
+</div>
+</div>
 
-    </div><!-- /content-grid -->
-  </div>
+</div></div>
 </section>
 
 
-<!-- ═══════════════════════════════════
-     BERGEN
-════════════════════════════════════ -->
+<!-- BERGEN -->
 <section class="city-section" id="bergen">
-  <div class="city-banner city-banner-bgn" data-city="BGN">
-    <div class="banner-eyebrow">Chapter 02 — Western Norway</div>
-    <h2 class="banner-name">Bergen</h2>
-    <p class="banner-tagline">Seven mountains. Constant rain. A food scene that punches well above its size. The most beautiful small city in Norway.</p>
-  </div>
+<div class="city-banner city-banner-bgn" data-city="BGN">
+<div class="banner-eyebrow">Chapter 02 — Western Norway</div>
+<h2 class="banner-name">Bergen</h2>
+<p class="banner-tagline">Seven mountains. Constant rain. A food scene that punches well above its size — and your hotel is dead center for all of it.</p>
+</div>
+<div class="city-content"><div class="content-grid">
 
-  <div class="city-content">
-    <div class="content-grid">
+<div class="content-full">
+<div class="hotel-card">
+<div class="hotel-header hotel-header-bgn">
+<div>
+<div class="hotel-label">Your hotel · Bergen</div>
+<div class="hotel-name">Hotel No. 13</div>
+<div class="hotel-address">Torgallmenningen 13 &nbsp;·&nbsp; Bergen's main square · City center</div>
+</div>
+<div class="hotel-transport-pills">
+<span class="transport-pill">🚡 Fløibanen funicular (5 min walk)</span>
+<span class="transport-pill">🐟 Fish Market (2 min walk)</span>
+<span class="transport-pill">🏛 Bryggen UNESCO (8 min walk)</span>
+<span class="transport-pill">🎨 KODE museums (6 min walk)</span>
+<span class="transport-pill">🚌 Bus station (10 min walk)</span>
+<span class="transport-pill">🚂 Bergen Station (10 min walk)</span>
+</div>
+</div>
+<div class="hotel-body">
+<p class="hotel-context">You couldn't be better positioned. <strong>Torgallmenningen</strong> is Bergen's main square — the hub from which everything radiates. The Fløibanen funicular is 5 minutes on foot. KODE museums (home to Lysverket) are 6 minutes. Bryggen wharf is 8 minutes. The fish market is literally around the corner. For Ulriken's cable car, take the Ulriksbussen from the tourist info office just off the square (runs hourly in summer). Buses and trams are directly outside. You do not need a taxi for anything in central Bergen.</p>
+<div class="proximity-grid">
+<div class="prox-item"><div class="prox-place">Fish Market (Fisketorget)</div><div class="prox-dist">2 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Pingvinen</div><div class="prox-dist">5 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Fløibanen Funicular</div><div class="prox-dist">5 min walk</div></div>
+<div class="prox-item"><div class="prox-place">KODE Museums / Lysverket</div><div class="prox-dist">6 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Bryggen (UNESCO)</div><div class="prox-dist">8 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Restaurant 1877</div><div class="prox-dist">8 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Apollon Platebar</div><div class="prox-dist">7 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Nordnes Peninsula (seafood)</div><div class="prox-dist">15 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Bergen Station (Bergensbanen)</div><div class="prox-dist">10 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Ulriken cable car (Ulriksbussen)</div><div class="prox-dist">Bus from square, ~15 min</div></div>
+</div>
+</div>
+</div>
+</div>
 
-      <!-- FOOD -->
-      <div class="content-full">
-        <div class="section-head">
-          <div class="section-number">01 — Food</div>
-          <h3 class="section-title">Where to eat</h3>
-          <div class="section-rule rule-bgn"></div>
-        </div>
-        <div class="restaurant-list">
-          <div class="resto-item">
-            <div class="resto-tag tag-fine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Michelin Star · KODE 4 Museum</div>
-              <div class="resto-name">Lysverket</div>
-              <div class="resto-desc">Inside the KODE 4 art museum. Chef Christopher Haatuft's "neo-fjordic" cuisine — wild-caught, foraged, locally sourced. 10-course tasting menu. Punk-inspired approach to fine dining. Can order bar dishes if fully booked for the main room.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-fine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Michelin Star (2025) · City Center</div>
-              <div class="resto-name">Gaptrast</div>
-              <div class="resto-desc">Bergen's newest serious dining destination, awarded its first Michelin star in 2025. Focuses on the best of Bergen's natural bounty. Worth booking ahead.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Local Institution · City Center</div>
-              <div class="resto-name">Pingvinen</div>
-              <div class="resto-desc">The most local pub-restaurant in Bergen. Traditional meatballs, mutton stew, potato dumplings. Opens early, closes 3am. Thursday is raspeballer night — Bergen locals pack in. Noisy, warm, and completely real.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-fine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Historic Address · Vetrlidsallmenningen</div>
-              <div class="resto-name">Restaurant 1877</div>
-              <div class="resto-desc">3-course surprise menu where the chefs decide. Exceptional wine list, knowledgeable staff. Consistently recommended by Bergen locals for a proper dinner. Book ahead on weekends.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Hidden Gem · Nordnes Peninsula</div>
-              <div class="resto-name">Nordnes family seafood spots</div>
-              <div class="resto-desc">Small, family-run seafood restaurants on the quiet Nordnes peninsula away from the Bryggen tourist strip. Fresh, local, cozy — exactly what Bergen's location should deliver.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-fine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">New Nordic · City Center</div>
-              <div class="resto-name">Marg & Bein</div>
-              <div class="resto-desc">4–8 course tasting menus inspired by local produce and Nordic ingredients. Relaxed fine dining without formality. Good for those who want the experience without stiffness.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Hidden · Off the circuit</div>
-              <div class="resto-name">Damsgårdstuene</div>
-              <div class="resto-desc">Family-run, generations old, completely off the tourist circuit. The kind of place Bergen locals know and most visitors never find. No Instagram presence — that's the point.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-wine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Craft Beer + Vinyl · City Center</div>
-              <div class="resto-name">Apollon Platebar</div>
-              <div class="resto-desc">Craft beer and vinyl records. Where Bergen locals actually go for a drink. Not a tourist bar, not a cocktail lounge — just good beer and good music in a room that smells like record sleeves.</div>
-            </div>
-          </div>
-        </div>
+
+<div class="content-full">
+  <div class="seasonal-alert seasonal-alert-sun">
+    <span class="sa-icon">🏔️</span>
+    <div>
+      <div class="sa-title">June 30 – July 2 — Peak summer Bergen</div>
+      <div class="sa-text">
+        <span class="day-badge day-badge-green">Tue Jun 30</span> Arrive from Copenhagen. Settle in, walk Bryggen in the evening (late light, fewer tour groups), dinner at Pingvinen or Restaurant 1877.<br>
+        <span class="day-badge day-badge-green">Wed Jul 1</span> Full mountain day. Fløybanen funicular is 5 min from your hotel. From the top, connect to Rundemannen or begin the Vidden Trail if doing the full traverse. KODE museums + Lysverket. Ulriken cable car via Ulriksbussen from the square.<br>
+        <span class="day-badge" style="background:#8b6914;color:#fff;">Thu Jul 2 ⭐ RASPEBALLER NIGHT</span> This is your last Bergen night. <strong>Go to Pingvinen for Thursday raspeballer (traditional potato dumplings — Thursdays only).</strong> It fills up fast — arrive by 6:30pm. This is the single most local experience you can have in Bergen.<br><br>
+        🚨 <strong>Book now if you haven't:</strong> Flåmsbana train Bergen→Myrdal→Flåm for July 3 (vy.no — July trains sell out). Lysverket tasting menu. Mostraumen fjord cruise. <strong>Rain gear every day, no exceptions.</strong>
       </div>
-
-      <!-- SCENIC -->
-      <div class="content-full">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">02 — Outdoors</div>
-          <h3 class="section-title">Scenic activities & must-sees</h3>
-          <div class="section-rule rule-bgn"></div>
-        </div>
-        <div class="scenic-grid">
-          <div class="scenic-card scenic-card-bgn">
-            <div class="scenic-badge">Signature Hike</div>
-            <div class="scenic-name">Vidden Trail</div>
-            <div class="scenic-desc">15km traverse from Ulriken to Fløyen (or reverse). 5–7 hours. Passes wild lakes and open plateau. The hike Bergen locals actually do. Not for beginners — proper footwear and weather check required.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Hidden Hike · Less Crowded</div>
-            <div class="scenic-name">Lyderhorn</div>
-            <div class="scenic-desc">Far less crowded than Fløyen or Ulriken. Challenging terrain. Incredible panoramic views. 4–5 hours round trip. The local choice when locals want actual solitude.</div>
-          </div>
-          <div class="scenic-card scenic-card-bgn">
-            <div class="scenic-badge">Mountain · 643m</div>
-            <div class="scenic-name">Ulriken</div>
-            <div class="scenic-desc">Tallest of Bergen's seven mountains. Take Ulrikenbanen cable car or hike the Sherpa staircase (1,300+ steps). Broader, more dramatic views than Fløyen. Restaurant at the top. Start the Vidden Trail from here.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Mountain · Funicular</div>
-            <div class="scenic-name">Fløyen</div>
-            <div class="scenic-desc">30–45 min hike or 8-min funicular ride. Gateway to Bergen's mountain network. Best for direct sunset views over the harbor. Rent a canoe at Skomakerdiket lake at the top in summer.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Island Escape</div>
-            <div class="scenic-name">Askøy Island</div>
-            <div class="scenic-desc">Short ferry from Bergen. Unmarked coastal trails, rugged scenery, secluded coves. Virtually no tourists. Check weather conditions and let someone know your route.</div>
-          </div>
-          <div class="scenic-card scenic-card-bgn">
-            <div class="scenic-badge">Fjord Cruise</div>
-            <div class="scenic-name">Mostraumen</div>
-            <div class="scenic-desc">The scenic fjord cruise Bergen locals recommend over generic harbour tours. Narrow fjord passage with dramatic cliffs. The view from water puts the landscape in proper context.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Art Museums</div>
-            <div class="scenic-name">KODE 1–4</div>
-            <div class="scenic-desc">Four connected world-class art museums including one of the largest Munch collections outside Oslo. Shockingly uncrowded. Lysverket is inside KODE 4 — pair them.</div>
-          </div>
-          <div class="scenic-card scenic-card-bgn">
-            <div class="scenic-badge">Unique · Private Island</div>
-            <div class="scenic-name">Cornelius Restaurant</div>
-            <div class="scenic-desc">On a private island outside Bergen, reached by boat. Inspired the 2022 film The Menu. One of the most unique dining experiences in Norway. Book well ahead.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RULES -->
-      <div class="content-wide">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">03 — Behavior</div>
-          <h3 class="section-title">Local knowledge & unwritten rules</h3>
-          <div class="section-rule rule-bgn"></div>
-        </div>
-        <div class="rules-grid">
-          <div class="rule-item">
-            <span class="rule-icon">🌧</span>
-            <div class="rule-headline">Bergen is the rainiest city in Europe</div>
-            <div class="rule-text">Don't fight it. Carry a quality rain jacket every single day — no exceptions, even when it looks clear. Locals laugh at umbrellas. This is the cost of living somewhere this beautiful.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">📅</span>
-            <div class="rule-headline">Thursdays: raspeballer at Pingvinen</div>
-            <div class="rule-text">Traditional potato dumplings served only on Thursdays. The restaurant fills up. Arrive early or accept the wait. This is a genuine Bergen ritual, not a tourist gimmick.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🐟</span>
-            <div class="rule-headline">The fish market is tourist-priced</div>
-            <div class="rule-text">Nice to browse, expensive to eat. Get your actual seafood at local spots on Nordnes peninsula or at Pingvinen. The market exists for photos and walk-through. Not dinner.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🏗️</span>
-            <div class="rule-headline">Bryggen is worth a walk — not a meal</div>
-            <div class="rule-text">UNESCO-listed wooden wharf. Genuinely beautiful — see it in the morning before tour groups arrive. Skip every restaurant on it. They exist entirely to capture tourists mid-awe.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🌦</span>
-            <div class="rule-headline">Use yr.no for weather, not Google</div>
-            <div class="rule-text">yr.no is the Norwegian meteorological service — what locals and outdoor guides actually trust. Google weather is notably unreliable for Bergen's hyperlocal conditions.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🚂</span>
-            <div class="rule-headline">The Bergen–Oslo train is a journey, not transport</div>
-            <div class="rule-text">Bergensbanen is widely considered one of Europe's most scenic rail journeys. If that's how you're arriving or leaving, sit right heading east. Don't rush it — treat it as a destination.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRAPS -->
-      <div class="content-half">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">04 — Avoid</div>
-          <h3 class="section-title">Tourist traps</h3>
-          <div class="section-rule rule-bgn"></div>
-        </div>
-        <div class="traps-list">
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Bryggen restaurants</div>
-              <div class="trap-desc">The wharf is beautiful. The restaurants on it are tourist-priced and average. Walk it, photograph it early morning, then eat on Nordnes or at Pingvinen.</div>
-            </div>
-          </div>
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Fisketorget (Fish Market)</div>
-              <div class="trap-desc">Visually fun and worth a browse. But a bowl of fish soup here costs what a full local meal costs elsewhere. Browse the stalls, don't commit to dinner.</div>
-            </div>
-          </div>
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Generic harbour tours</div>
-              <div class="trap-desc">Multiple operators run identical, undifferentiated tours from the main dock. Skip these. Book the Mostraumen fjord cruise specifically — it's a different experience entirely.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
+</div>
+
+<div class="content-full">
+<div class="section-head"><div class="section-number">01 — Food</div><h3 class="section-title">Where to eat</h3><div class="section-rule rule-bgn"></div></div>
+<div class="restaurant-list">
+<div class="resto-item"><div class="resto-tag tag-fine"></div><div class="resto-body"><div class="resto-meta"><span>Michelin Star · KODE 4 Museum</span><span class="resto-dist">6 min walk</span></div><div class="resto-name">Lysverket</div><div class="resto-desc">Chef Christopher Haatuft's "neo-fjordic" cuisine inside KODE 4 — 6 minutes from the hotel. Wild-caught, foraged, locally sourced. 10-course tasting menu. If fully booked, order bar dishes at the counter — same kitchen, same quality.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-fine"></div><div class="resto-body"><div class="resto-meta"><span>Michelin Star (2025)</span><span class="resto-dist">10 min walk</span></div><div class="resto-name">Gaptrast</div><div class="resto-desc">Bergen's newest Michelin star, awarded 2025. The most exciting new addition to the city's dining scene. Book ahead — a short walk from the hotel.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Local Institution · City Center</span><span class="resto-dist">5 min walk</span></div><div class="resto-name">Pingvinen</div><div class="resto-desc">Five minutes from the hotel. The most local pub-restaurant in Bergen. Traditional meatballs, mutton stew, potato dumplings. Thursday is raspeballer night — pack in early. Opens early, closes 3am. Don't miss this one.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-fine"></div><div class="resto-body"><div class="resto-meta"><span>Historic Address · Vetrlidsallmenningen</span><span class="resto-dist">8 min walk</span></div><div class="resto-name">Restaurant 1877</div><div class="resto-desc">3-course surprise menu where the chefs decide. Exceptional wine list. Consistently recommended by Bergen locals for a proper dinner. Book ahead on weekends.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Hidden Gem · Nordnes Peninsula</span><span class="resto-dist">15 min walk past Bryggen</span></div><div class="resto-name">Nordnes family seafood spots</div><div class="resto-desc">Walk the waterfront past Bryggen and continue to Nordnes. Small, family-run seafood spots away from the tourist strip. The kind of fresh, local, cozy seafood Bergen's location promises but the fish market doesn't deliver.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-fine"></div><div class="resto-body"><div class="resto-meta"><span>New Nordic · City Center</span><span class="resto-dist">8 min walk</span></div><div class="resto-name">Marg & Bein</div><div class="resto-desc">4–8 course menus from local produce. Relaxed fine dining without formality or stiffness. Good for those who want the tasting menu experience without a full Michelin price tag.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Hidden · Off circuit</span><span class="resto-dist">20 min walk</span></div><div class="resto-name">Damsgårdstuene</div><div class="resto-desc">Family-run, generations old, completely off the tourist circuit. No Instagram presence — that's the point. Worth the walk for the experience of eating where Bergen locals actually eat.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-wine"></div><div class="resto-body"><div class="resto-meta"><span>Craft Beer + Vinyl · City Center</span><span class="resto-dist">7 min walk</span></div><div class="resto-name">Apollon Platebar</div><div class="resto-desc">Where Bergen locals actually drink. Seven minutes from the hotel. Craft beer and vinyl records. Not a tourist bar. Good stop before or after dinner at Lysverket.</div></div></div>
+</div>
+</div>
+
+<div class="content-full">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">02 — Outdoors</div><h3 class="section-title">Scenic activities & must-sees</h3><div class="section-rule rule-bgn"></div></div>
+<div class="scenic-grid">
+<div class="scenic-card scenic-card-bgn"><div class="scenic-badge">Signature Hike</div><div class="scenic-name">Vidden Trail</div><div class="scenic-dist">Start at Fløyen (5 min walk) or Ulriken (bus from square)</div><div class="scenic-desc">15km traverse from Ulriken to Fløyen (or reverse). 5–7 hours. The hike Bergen locals actually do. Start at Fløyen — 5 min from the hotel — and finish at Ulriken, taking the cable car down. Not for beginners. Check yr.no before going.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Hidden Hike · Less Crowded</div><div class="scenic-name">Lyderhorn</div><div class="scenic-dist">Bus from Torgallmenningen (~20 min)</div><div class="scenic-desc">Far less crowded than Fløyen or Ulriken. Challenging terrain, panoramic views. 4–5 hours round trip. The local choice for actual solitude. Bus from outside the hotel directly.</div></div>
+<div class="scenic-card scenic-card-bgn"><div class="scenic-badge">Mountain · 643m</div><div class="scenic-name">Ulriken</div><div class="scenic-dist">Ulriksbussen from Torgallmenningen (~15 min)</div><div class="scenic-desc">Tallest of Bergen's seven mountains. Cable car (from Ulriksbussen bus stop near your hotel) or Sherpa staircase (1,300+ steps). Broader views than Fløyen. Restaurant at top. Combine with the Vidden Trail.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Mountain · Funicular</div><div class="scenic-name">Fløyen</div><div class="scenic-dist">5 min walk from hotel to funicular base</div><div class="scenic-desc">The funicular is 5 minutes from your front door. 8-min ride to the top. Best for sunset views directly over the harbor. Rent a canoe at Skomakerdiket lake at the top in summer. Go early to beat tour groups.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Island Escape</div><div class="scenic-name">Askøy Island</div><div class="scenic-dist">Ferry from Strandkai terminal (10 min walk)</div><div class="scenic-desc">Short ferry from the terminal near Bryggen. Unmarked coastal trails, rugged scenery, no tourists. Check weather before going. A full half-day out from the hotel.</div></div>
+<div class="scenic-card scenic-card-bgn"><div class="scenic-badge">Fjord Cruise</div><div class="scenic-name">Mostraumen</div><div class="scenic-dist">Departs from Strandkai (10 min walk)</div><div class="scenic-desc">The fjord cruise Bergen locals actually recommend. Narrow fjord passage with dramatic cliffs. Departs from the terminal near Bryggen — combine with a morning walk from the hotel.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Art Museums</div><div class="scenic-name">KODE 1–4</div><div class="scenic-dist">6 min walk from hotel</div><div class="scenic-desc">Four connected world-class art museums. Six minutes from the hotel. Shockingly uncrowded. Lysverket is inside KODE 4 — pair dinner reservations with an afternoon in the museum.</div></div>
+<div class="scenic-card scenic-card-bgn"><div class="scenic-badge">Unique · Private Island</div><div class="scenic-name">Cornelius Restaurant</div><div class="scenic-dist">Boat from city center (~20 min)</div><div class="scenic-desc">On a private island, reached by boat from Bergen. Inspired the 2022 film The Menu. One of the most unique dining experiences in Norway. Book well ahead — the Hotel No. 13 concierge can assist.</div></div>
+</div>
+</div>
+
+<div class="content-wide">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">03 — Behavior</div><h3 class="section-title">Local knowledge & unwritten rules</h3><div class="section-rule rule-bgn"></div></div>
+<div class="rules-grid">
+<div class="rule-item"><span class="rule-icon">🌧</span><div class="rule-headline">Bergen is the rainiest city in Europe</div><div class="rule-text">Don't fight it. Carry a quality rain jacket every single day — no exceptions, even when it looks clear from your hotel window. Locals laugh at umbrellas. This is the cost of living somewhere this beautiful.</div></div>
+<div class="rule-item"><span class="rule-icon">📅</span><div class="rule-headline">Thursdays: raspeballer at Pingvinen</div><div class="rule-text">Traditional potato dumplings, Thursdays only. The restaurant fills up fast — it's 5 min from your hotel, so arrive early. Genuine Bergen ritual, not a tourist gimmick.</div></div>
+<div class="rule-item"><span class="rule-icon">🐟</span><div class="rule-headline">The fish market is tourist-priced</div><div class="rule-text">It's 2 min from the hotel — hard to avoid and fine to browse. Don't eat dinner here. Get actual seafood at Nordnes spots instead. The market exists for walk-through, not meals.</div></div>
+<div class="rule-item"><span class="rule-icon">🏗️</span><div class="rule-headline">Bryggen is worth a walk — not a meal</div><div class="rule-text">UNESCO-listed wooden wharf, 8 min from the hotel. Genuinely beautiful — go early before tour groups. Skip every restaurant on it. Pingvinen is 5 min from your hotel and serves actual Bergen food.</div></div>
+<div class="rule-item"><span class="rule-icon">🌦</span><div class="rule-headline">Use yr.no for weather, not Google</div><div class="rule-text">yr.no is the Norwegian meteorological service — what locals and outdoor guides trust. Critical for any mountain day. Google weather is notoriously unreliable for Bergen's microclimate.</div></div>
+<div class="rule-item"><span class="rule-icon">🚂</span><div class="rule-headline">The Bergen–Oslo train is a journey, not transport</div><div class="rule-text">Bergensbanen departs from Bergen Station (10 min walk from the hotel). One of Europe's most scenic rail journeys. If that's how you're leaving, sit right heading east. Treat it as a destination.</div></div>
+</div>
+</div>
+
+<div class="content-half">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">04 — Avoid</div><h3 class="section-title">Tourist traps</h3><div class="section-rule rule-bgn"></div></div>
+<div class="traps-list">
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Bryggen restaurants</div><div class="trap-desc">The wharf is beautiful. The restaurants on it are tourist-priced and average. Walk it early morning, then eat at Pingvinen (5 min from your hotel) or Nordnes seafood spots.</div></div></div>
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Fisketorget (Fish Market)</div><div class="trap-desc">Two minutes from your hotel — fine to browse. Don't eat here. A bowl of fish soup costs what a full local meal costs elsewhere.</div></div></div>
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Generic harbour tours</div><div class="trap-desc">Multiple operators run identical tours from the dock near the hotel. Skip these. Book the Mostraumen fjord cruise specifically — it's a fundamentally different experience.</div></div></div>
+</div>
+</div>
+
+</div></div>
 </section>
 
 
-<!-- ═══════════════════════════════════
-     OSLO
-════════════════════════════════════ -->
-<section class="city-section" id="oslo">
-  <div class="city-banner city-banner-osl" data-city="OSL">
-    <div class="banner-eyebrow">Chapter 03 — Eastern Norway</div>
-    <h2 class="banner-name">Oslo</h2>
-    <p class="banner-tagline">Norway's capital where the fjord meets the city, the forest is 30 minutes away by metro, and the food scene is quietly world-class.</p>
-  </div>
 
-  <div class="city-content">
-    <div class="content-grid">
+<!-- FLAM -->
+<section class="city-section" id="flam">
+<div class="city-banner" data-city="FLÅM" style="background:#4a3520;">
+<div class="banner-eyebrow">Chapter 02.5 — Aurlandsfjord, Western Norway</div>
+<h2 class="banner-name">Flåm</h2>
+<p class="banner-tagline">One night in Norway's most dramatic fjord village. Cruise ships dock here daily — you have the evening and morning to yourself if you plan it right.</p>
+</div>
+<div class="city-content"><div class="content-grid">
 
-      <!-- FOOD -->
-      <div class="content-full">
-        <div class="section-head">
-          <div class="section-number">01 — Food</div>
-          <h3 class="section-title">Where to eat</h3>
-          <div class="section-rule rule-osl"></div>
-        </div>
-        <div class="restaurant-list">
-          <div class="resto-item">
-            <div class="resto-tag tag-fine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Two Michelin Stars · Bjørvika</div>
-              <div class="resto-name">Kontrast</div>
-              <div class="resto-desc">New Nordic tasting menu. Earned its second Michelin star in 2024. Elegant presentations, seasonal Norwegian produce. Elegant without being stiff. Book well in advance.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Neighborhood Gem · Torshov</div>
-              <div class="resto-name">Liminal</div>
-              <div class="resto-desc">Sustainable tasting menu with produce from their own farm. Counter seats give you kitchen views and conversation with the chefs. Ask for second helpings of the ice cream — they'll say yes. The Bergen scallop with coffee shoyu is a signature.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-coffee"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Coffee Institution · Grünerløkka</div>
-              <div class="resto-name">Tim Wendelboe</div>
-              <div class="resto-desc">2004 World Barista Champion. Tiny, precise, brilliant. The frozen Cappuccino Al Freddo in summer is non-negotiable. A coffee pilgrimage worth making. Don't go expecting a café — it's a roastery with a bar.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-coffee"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Coffee · Grünerløkka</div>
-              <div class="resto-name">Supreme Roastworks</div>
-              <div class="resto-desc">Locals debate whether Tim Wendelboe or Supreme is the better cup. Try both. They're different answers to the same question and you'll have strong opinions by day two.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Bakery · Lilleborg</div>
-              <div class="resto-name">Daegens</div>
-              <div class="resto-desc">Possibly the best cardamom bun in Norway. Owner hand-makes every bun daily. Vanilla + star anise + lemon zest in the syrup. Sell out early. Get there before 9am.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Local · St. Hanshaugen</div>
-              <div class="resto-name">Smalhans</div>
-              <div class="resto-desc">Simple, delicious, sustainable. Part wine bar, part restaurant. Also a pilgrimage spot for Jo Nesbø fans — Harry Hole drinks here in the novels. The real location, exactly as described.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Norwegian · Bjørvika</div>
-              <div class="resto-name">Vaaghals</div>
-              <div class="resto-desc">Beautiful food with a Norwegian focus. Where local business crowd eats well without a Michelin price tag. Not tourist-facing — doesn't need to be.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-street"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Waterfront Food Hall · Aker Brygge</div>
-              <div class="resto-name">Vippa</div>
-              <div class="resto-desc">The local's answer to Oslo Street Food. Fjordside setting, relaxed vibe, diverse vendors (Vietnamese to Ethiopian). Summer evenings here are hard to beat. Prices lower than the tourist-facing alternatives.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-local"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Budget Local · Grønland</div>
-              <div class="resto-name">Grønland Indian & Middle Eastern</div>
-              <div class="resto-desc">Oslo's multicultural neighborhood delivers genuine Indian and Middle Eastern food at prices that make the city feel almost affordable. Punjab Tandori is consistently mentioned by locals. Come hungry.</div>
-            </div>
-          </div>
-          <div class="resto-item">
-            <div class="resto-tag tag-wine"></div>
-            <div class="resto-body">
-              <div class="resto-meta">Natural Wine Bar · City Center</div>
-              <div class="resto-name">Territoriet</div>
-              <div class="resto-desc">Best natural wine selection in Oslo. Blind tasting flights with the producer's story per glass. Knowledgeable staff, moody atmosphere. Start your evening here before moving on.</div>
-            </div>
-          </div>
-        </div>
+<div class="content-full">
+  <div class="hotel-card">
+    <div class="hotel-header" style="background:#4a3520;">
+      <div>
+        <div class="hotel-label">Your hotel · Flåm</div>
+        <div class="hotel-name">Flåmsbrygga Hotell</div>
+        <div class="hotel-address">Flåm harbor · 100m from the train station and boat dock</div>
       </div>
-
-      <!-- SCENIC -->
-      <div class="content-full">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">02 — Outdoors</div>
-          <h3 class="section-title">Scenic activities & must-sees</h3>
-          <div class="section-rule rule-osl"></div>
-        </div>
-        <div class="scenic-grid">
-          <div class="scenic-card scenic-card-osl">
-            <div class="scenic-badge">Underrated Hike</div>
-            <div class="scenic-name">Grefsenkollen</div>
-            <div class="scenic-desc">45-min hike from the city edge. Views of Holmenkollen, the skyline, and Oslofjord. Restaurant at the top. Locals do this on weekday evenings. Almost no tourists.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Forest · 30 min from center</div>
-            <div class="scenic-name">Nordmarka</div>
-            <div class="scenic-desc">Vast forested highland accessible by T-bane metro. Hiking in summer, cross-country skiing in winter. Where Oslo locals disappear on weekends. Free, beautiful, and endless.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Island Hopping · Free with transit</div>
-            <div class="scenic-name">Oslofjord Islands</div>
-            <div class="scenic-desc">Covered by your regular transit ticket. Hovedøya (monastery ruins), Langøyene (best swimming), Gressholmen (peaceful, car-free). The local summer escape that costs nothing.</div>
-          </div>
-          <div class="scenic-card scenic-card-osl">
-            <div class="scenic-badge">Ski Jump + Views</div>
-            <div class="scenic-name">Holmenkollen</div>
-            <div class="scenic-desc">Iconic ski jump museum, observation deck, virtual ski ride. Direct T-bane line. The views of the city and fjord from here are excellent in every season.</div>
-          </div>
-          <div class="scenic-card scenic-card-osl">
-            <div class="scenic-badge">Museum Peninsula</div>
-            <div class="scenic-name">Bygdøy</div>
-            <div class="scenic-desc">Viking Ship Museum (reopens 2027), Fram polar ship, Norwegian Folk Museum with stave churches. Take the ferry from City Hall pier — that's how locals arrive. Skip the bus.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Medieval Fortress · Free</div>
-            <div class="scenic-name">Akershus Festning</div>
-            <div class="scenic-desc">Dating to 1299. Free to walk the exterior. Stunning harbor views. Consistently underrated by tourists who rush past it heading to the fjord boats.</div>
-          </div>
-          <div class="scenic-card scenic-card-dark">
-            <div class="scenic-badge">Sculpture Park · Free</div>
-            <div class="scenic-name">Vigeland Sculpture Park</div>
-            <div class="scenic-desc">200+ sculptures by Gustav Vigeland. Free, open year-round. Arrive before 10am on weekends — after that it's tour groups. Extraordinary when quiet, crowded when not.</div>
-          </div>
-          <div class="scenic-card scenic-card-osl">
-            <div class="scenic-badge">Art Museum</div>
-            <div class="scenic-name">MUNCH Museum</div>
-            <div class="scenic-desc">Largest Munch collection in the world in a striking new building visible from the fjord. Don't skip the permanent collection for the temporary exhibitions — it's where the depth is.</div>
-          </div>
-        </div>
+      <div class="hotel-transport-pills">
+        <span class="transport-pill">🚂 Flåmsbana station (2 min walk)</span>
+        <span class="transport-pill">⛵ Fjord cruise dock (2 min walk)</span>
+        <span class="transport-pill">🛶 Njord Kayak Centre (on the beach)</span>
+        <span class="transport-pill">🚌 Stegastein bus stop (outside hotel)</span>
       </div>
-
-      <!-- NEIGHBORHOODS -->
-      <div class="content-full">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">03 — Neighborhoods</div>
-          <h3 class="section-title">Where to base yourself</h3>
-          <div class="section-rule rule-osl"></div>
-        </div>
-        <div class="spots-grid">
-          <div class="spot-card">
-            <div class="spot-type">Best Overall · East Side</div>
-            <div class="spot-name">Grünerløkka</div>
-            <div class="spot-desc">Oslo's bohemian, creative neighborhood. Indie cafés, vintage shopping, street art, music venues, craft beer bars. Where young Oslo actually lives. Called Oslo's Brooklyn — and for once that comparison isn't a stretch.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Multicultural · Budget-Friendly</div>
-            <div class="spot-name">Grønland</div>
-            <div class="spot-desc">Diverse, affordable, genuinely local. The best cheap food in the city by a wide margin. Feels entirely different from the polished west side — that contrast is worth experiencing.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Upscale · Quiet</div>
-            <div class="spot-name">Frogner / Majorstuen</div>
-            <div class="spot-desc">Leafy, embassy-lined, calm. Vigeland Park is here. Boutique bakeries, higher prices. Good transport connections. Best if you want quiet streets without sacrificing access.</div>
-          </div>
-          <div class="spot-card">
-            <div class="spot-type">Food Hall · Local</div>
-            <div class="spot-name">Mathallen Oslo</div>
-            <div class="spot-desc">Indoor food hall near Grünerløkka. Local vendors, Norwegian specialties, good for lunch sampling. Slightly touristy but the quality is real. Better for grazing than sitting.</div>
-          </div>
-        </div>
+    </div>
+    <div class="hotel-body">
+      <p class="hotel-context">You're on the harbor in the dead center of Flåm village. Everything — the train station, the fjord cruise dock, Njord Kayak, the Stegastein bus — is within 2 minutes on foot. <strong>Critically: Flåm is one of Norway's most tourist-saturated spots in July.</strong> Cruise ships dock here daily and disgorge thousands of day-trippers between 10am and 4pm. Your edge: you're staying overnight, so the village is yours in the evening (after ~5pm) and early morning. Plan accordingly. Dinner and sunset at 11pm from the harbor is something day-trippers never see.</p>
+      <div class="proximity-grid">
+        <div class="prox-item"><div class="prox-place">Flåmsbana train station</div><div class="prox-dist">2 min walk</div></div>
+        <div class="prox-item"><div class="prox-place">Nærøyfjord cruise dock</div><div class="prox-dist">2 min walk</div></div>
+        <div class="prox-item"><div class="prox-place">Njord Kayak Centre</div><div class="prox-dist">On the beach</div></div>
+        <div class="prox-item"><div class="prox-place">Stegastein viewpoint bus</div><div class="prox-dist">From hotel entrance</div></div>
+        <div class="prox-item"><div class="prox-place">Aurland village (quieter)</div><div class="prox-dist">5 min by bus</div></div>
+        <div class="prox-item"><div class="prox-place">Flåm Railway Museum</div><div class="prox-dist">3 min walk · Free</div></div>
       </div>
-
-      <!-- RULES -->
-      <div class="content-wide">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">04 — Behavior</div>
-          <h3 class="section-title">Unwritten rules</h3>
-          <div class="section-rule rule-osl"></div>
-        </div>
-        <div class="rules-grid">
-          <div class="rule-item">
-            <span class="rule-icon">🌲</span>
-            <div class="rule-headline">Friluftsliv is a cultural identity</div>
-            <div class="rule-text">Outdoor life isn't a hobby — it's existential. Sundays mean a Søndagstur (Sunday hike) regardless of weather. Join in, don't plan indoor activities when conditions cooperate.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">⚖️</span>
-            <div class="rule-headline">Janteloven governs social behavior</div>
-            <div class="rule-text">Don't boast, don't perform, don't expect special treatment. Norwegians value collective equality over individual display. Humility is the default register. It applies to you too as a visitor.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🕑</span>
-            <div class="rule-headline">Punctuality is serious</div>
-            <div class="rule-text">If you say 2pm, be there at 2pm. Being late is disrespectful, not casual or charming. Build buffer time into your plans — don't plan to arrive "around" any time.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🤝</span>
-            <div class="rule-headline">Norwegians are reserved — not unfriendly</div>
-            <div class="rule-text">Don't mistake quiet for coldness. No uninvited physical contact. Avoid personal questions (money, relationships, religion) until you know someone. Safe topics: nature, weather, travel, sports.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🍃</span>
-            <div class="rule-headline">Leave no trace</div>
-            <div class="rule-text">Trail litter is close to a moral failing here. Stay on marked paths to protect ecosystems. Fishing in the inner Oslofjord is now prohibited from January 2026 — for everyone.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">💸</span>
-            <div class="rule-headline">Oslo is expensive — plan accordingly</div>
-            <div class="rule-text">Beer: 90–120 NOK. Cocktails: 150–200 NOK. Use the Oslo Pass if hitting multiple museums. Museums often free first Sunday of the month. Transit pass covers fjord island ferries.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🎫</span>
-            <div class="rule-headline">Buy transit tickets before boarding</div>
-            <div class="rule-text">You cannot pay on trams or buses in Oslo. Use the Ruter app. Inspectors check regularly and fines are steep and non-negotiable.</div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-icon">🕘</span>
-            <div class="rule-headline">Vigeland Park: before 10am only</div>
-            <div class="rule-text">After 10am on weekends it's tour groups and chaos. Before 10am it's extraordinary. Set the alarm. The sculpture park is genuinely unmissable but only if you time it right.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRAPS -->
-      <div class="content-half">
-        <hr class="section-divider">
-        <div class="section-head">
-          <div class="section-number">05 — Avoid</div>
-          <h3 class="section-title">Tourist traps</h3>
-          <div class="section-rule rule-osl"></div>
-        </div>
-        <div class="traps-list">
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Oslo Street Food market</div>
-              <div class="trap-desc">Overhyped, overpriced, and designed for tourists. Go to Vippa by the fjord instead — same variety, better setting, lower prices, and actual locals.</div>
-            </div>
-          </div>
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Aker Brygge waterfront restaurants</div>
-              <div class="trap-desc">Upscale address, tourist prices, zero local credibility. Nice for a drink with a fjord view. Not where Oslo eats dinner.</div>
-            </div>
-          </div>
-          <div class="trap-card">
-            <div class="trap-x">✕</div>
-            <div class="trap-body">
-              <div class="trap-name">Bygdøy museums at 11am–2pm in summer</div>
-              <div class="trap-desc">Cruise ships dump crowds into these museums during peak hours. Arrive at 9am or visit on weekday afternoons. The difference in experience is not subtle.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
+</div>
+
+<div class="content-full">
+  <div class="seasonal-alert seasonal-alert-warn">
+    <span class="sa-icon">⚠️</span>
+    <div>
+      <div class="sa-title">Friday July 3 — One night only: be strategic</div>
+      <div class="sa-text">
+        <span class="day-badge" style="background:#4a3520;color:#e8d5b0;">Fri Jul 3</span> Arrive from Bergen by train (via Myrdal, ~3h 45min) or express boat (departs Bergen 8am, arrives 1:40pm). <strong>The train via Myrdal is the better choice</strong> — the Flåmsbana descent into Flåm is itself one of Norway's great experiences, and you check off the railway on arrival. Book on vy.no immediately — July trains sell out weeks ahead.<br><br>
+        Cruise ships clear out by ~4–5pm. From then until you leave Saturday morning, Flåm is a different place. Plan your Nærøyfjord cruise or kayaking for the morning, Stegastein in the early afternoon before cruise ship buses arrive, and enjoy the harbor and village in the evening when it's genuinely quiet.<br><br>
+        <strong>Getting to Oslo July 4:</strong> Train from Flåm → Myrdal → Oslo S (~6h 27min). Book on vy.no now. Depart early to arrive Oslo mid-afternoon and have a full Saturday evening in the city.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-full">
+  <div class="section-head"><div class="section-number">01 — Activities</div><h3 class="section-title">What to do with one night</h3><div class="section-rule" style="background:#4a3520;"></div></div>
+  <div class="scenic-grid">
+    <div class="scenic-card" style="background:#2a4a2a;">
+      <div class="scenic-badge">Fjord Cruise · Book in advance</div>
+      <div class="scenic-name">Nærøyfjord to Gudvangen</div>
+      <div class="scenic-dist">Departs from dock 2 min from hotel</div>
+      <div class="scenic-desc">Electric boat through the UNESCO-listed Nærøyfjord — Europe's narrowest fjord. 2 hours each way. Sheer cliff walls, waterfalls, seals. Return by bus (20 min) or boat. Do this in the morning before cruise ships peak. Book well in advance — July sells out.</div>
+    </div>
+    <div class="scenic-card" style="background:#1a1814;">
+      <div class="scenic-badge">Viewpoint · Go early or at sunset</div>
+      <div class="scenic-name">Stegastein</div>
+      <div class="scenic-dist">Tourist bus from hotel entrance, ~30 min</div>
+      <div class="scenic-desc">Cantilever viewing platform 650m above the Aurlandsfjord. Jaw-dropping. Bus runs hourly from outside the hotel. Go before 10am or after 5pm — midday is when tour buses from cruise ships overwhelm it. In July, you can visit at 9–10pm in full daylight.</div>
+    </div>
+    <div class="scenic-card" style="background:#2a4a2a;">
+      <div class="scenic-badge">Kayaking · Book with Njord</div>
+      <div class="scenic-name">Aurlandsfjord kayak</div>
+      <div class="scenic-dist">Njord Kayak Centre · on the beach</div>
+      <div class="scenic-desc">3–4 hour guided kayak tours with Njord, departing from the beach in front of your hotel. Stable double kayaks, qualified guides, seals and porpoises likely. Morning departures have calmer water and better light. Also runs Family Kayak Adventure. Book ahead.</div>
+    </div>
+    <div class="scenic-card" style="background:#1a1814;">
+      <div class="scenic-badge">Railway · Part of Bergen→Flåm journey</div>
+      <div class="scenic-name">Flåmsbana Railway</div>
+      <div class="scenic-dist">2 min walk to station</div>
+      <div class="scenic-desc">World's steepest normal-gauge railway — 20km descending 870m through 20 tunnels and dramatic switchbacks. You'll ride this arriving from Bergen (Myrdal→Flåm). Free Flåm Railway Museum by the station explains the construction history. Small but surprisingly engaging.</div>
+    </div>
+    <div class="scenic-card" style="background:#2a4a2a;">
+      <div class="scenic-badge">Evening · After cruise ships leave</div>
+      <div class="scenic-name">Aurland village</div>
+      <div class="scenic-dist">5 min by bus from Flåm</div>
+      <div class="scenic-desc">Quieter village 5 minutes from Flåm. Better dinner options, less tourist pressure. Evening walk along the waterfront with fjord views and late daylight. A good escape from Flåm's harbor buzz after the day-trippers have left.</div>
+    </div>
+    <div class="scenic-card" style="background:#1a1814;">
+      <div class="scenic-badge">Morning hike · Quiet before 9am</div>
+      <div class="scenic-name">Brekkefossen waterfall trail</div>
+      <div class="scenic-dist">Walk from village center</div>
+      <div class="scenic-desc">Walk up the Flåm valley toward the Brekkefossen waterfall before the day-trippers arrive. The valley is stunning early morning in summer. 2–3 hours return. No special equipment needed in July.</div>
+    </div>
+  </div>
+</div>
+
+<div class="content-full">
+  <hr class="section-divider">
+  <div class="section-head"><div class="section-number">02 — Transport</div><h3 class="section-title">Getting in & out</h3><div class="section-rule" style="background:#4a3520;"></div></div>
+  <div class="rules-grid">
+    <div class="rule-item"><span class="rule-icon">🚂</span><div class="rule-headline">Bergen → Flåm (July 3)</div><div class="rule-text">Train from Bergen Station → Myrdal → Flåm on Vy (~3h 45min total). Book on vy.no immediately — July trains sell out. The Flåmsbana descent from Myrdal to Flåm is itself the attraction. Sit on the left side going down for best waterfall views.</div></div>
+    <div class="rule-item"><span class="rule-icon">⛵</span><div class="rule-headline">Alternative: Express boat Bergen → Flåm</div><div class="rule-text">Norled express boat departs Bergen Strandkai terminal at 8am, arrives Flåm ~1:40pm (5.5 hours). Beautiful journey through Sognefjord. More expensive and slower but stunning. Departs near Hotel No. 13. Book at norled.no or visitbergen.com.</div></div>
+    <div class="rule-item"><span class="rule-icon">🚂</span><div class="rule-headline">Flåm → Oslo (July 4 morning)</div><div class="rule-text">Train from Flåm → Myrdal → Oslo S (~6h 27min). Book on vy.no now. Depart by 8–9am to arrive Oslo mid-afternoon, giving you a full Saturday evening in the city. Luggage space is tight on the Flåmsbana — board early.</div></div>
+    <div class="rule-item"><span class="rule-icon">⚠️</span><div class="rule-headline">Book everything before you leave home</div><div class="rule-text">Flåmsbana tickets, Nærøyfjord cruise, and kayaking all sell out in July. The train tickets especially — available 90 days in advance on vy.no. Don't arrive hoping to buy at the station.</div></div>
+  </div>
+</div>
+
+<div class="content-half">
+  <hr class="section-divider">
+  <div class="section-head"><div class="section-number">03 — Avoid</div><h3 class="section-title">Flåm traps</h3><div class="section-rule" style="background:#4a3520;"></div></div>
+  <div class="traps-list">
+    <div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Being in Flåm village 10am–4pm</div><div class="trap-desc">This is when cruise ships have docked and thousands of day-trippers are on the same 200m stretch. Be on the fjord, up at Stegastein, or kayaking during these hours. Return to the village for dinner.</div></div></div>
+    <div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">The "Norway in a Nutshell" package tours</div><div class="trap-desc">These pre-packaged tours herd everyone through the same things at the same time. Since you're staying overnight, book the individual components yourself at better times. You'll have more control and less company.</div></div></div>
+    <div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Flåm harbor restaurants at peak hours</div><div class="trap-desc">Overpriced and overwhelmed during cruise ship hours. Eat early, eat late, or go to Aurland village (5 min bus) for a more relaxed dinner experience.</div></div></div>
+  </div>
+</div>
+
+</div></div>
+</section>
+
+
+<!-- OSLO -->
+<section class="city-section" id="oslo">
+<div class="city-banner city-banner-osl" data-city="OSL">
+<div class="banner-eyebrow">Chapter 03 — Eastern Norway</div>
+<h2 class="banner-name">Oslo</h2>
+<p class="banner-tagline">Norway's capital — fjord on the doorstep, forest 30 minutes away, and your hotel is as central as it gets.</p>
+</div>
+<div class="city-content"><div class="content-grid">
+
+<div class="content-full">
+<div class="hotel-card">
+<div class="hotel-header hotel-header-osl">
+<div>
+<div class="hotel-label">Your hotel · Oslo</div>
+<div class="hotel-name">Hotel Continental</div>
+<div class="hotel-address">Stortingsgata 24–26 &nbsp;·&nbsp; Nationaltheatret &nbsp;·&nbsp; Est. 1900</div>
+</div>
+<div class="hotel-transport-pills">
+<span class="transport-pill">🚇 Nationaltheatret metro (1 min)</span>
+<span class="transport-pill">🚋 Tram 11, 12, 13 (1 min)</span>
+<span class="transport-pill">✈️ Flytoget airport express (100m)</span>
+<span class="transport-pill">🚶 Royal Palace (6 min)</span>
+<span class="transport-pill">🚶 Aker Brygge (10 min)</span>
+</div>
+</div>
+<div class="hotel-body">
+<p class="hotel-context">You're at the absolute center of Oslo. <strong>Nationaltheatret</strong> station — directly outside the hotel — gives you every tram and metro line in the city. Karl Johans gate is a 3-min walk. Royal Palace is 6 min. Aker Brygge is 10 min on foot. Grünerløkka — the neighborhood you actually want to spend time in — is one tram stop away (tram 11 or 12 from outside the door). The Flytoget airport express stops at Nationaltheatret, 100m away. Also worth noting: <strong>Theatercaféen</strong>, in the hotel's ground floor, is a genuine Oslo institution locals eat at — not just hotel guests. Book ahead even as a guest.</p>
+<div class="proximity-grid">
+<div class="prox-item"><div class="prox-place">Karl Johans gate</div><div class="prox-dist">3 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Royal Palace</div><div class="prox-dist">6 min walk</div></div>
+<div class="prox-item"><div class="prox-place">National Museum</div><div class="prox-dist">7 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Aker Brygge / Vippa</div><div class="prox-dist">10–12 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Akershus Festning</div><div class="prox-dist">15 min walk</div></div>
+<div class="prox-item"><div class="prox-place">Grünerløkka (Tim Wendelboe etc.)</div><div class="prox-dist">1 tram stop (11 or 12)</div></div>
+<div class="prox-item"><div class="prox-place">Vigeland Sculpture Park</div><div class="prox-dist">Tram 12, 15 min</div></div>
+<div class="prox-item"><div class="prox-place">Bygdøy (ferry or bus 30)</div><div class="prox-dist">12 min walk to pier</div></div>
+<div class="prox-item"><div class="prox-place">Oslofjord island ferries</div><div class="prox-dist">12 min walk to City Hall pier</div></div>
+<div class="prox-item"><div class="prox-place">Holmenkollen</div><div class="prox-dist">T-bane line 1, ~25 min</div></div>
+<div class="prox-item"><div class="prox-place">MUNCH Museum</div><div class="prox-dist">Tram or 20 min walk via Opera</div></div>
+<div class="prox-item"><div class="prox-place">Oslo Airport (OSL)</div><div class="prox-dist">Flytoget, 20 min</div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="content-full">
+  <div class="seasonal-alert seasonal-alert-sun">
+    <span class="sa-icon">🌊</span>
+    <div>
+      <div class="sa-title">July 4–7 — Peak summer Oslo · 4 nights</div>
+      <div class="sa-text">
+        <span class="day-badge day-badge-purple">Sat Jul 4</span> Arrive from Flam (~6h train). Check in, walk Aker Brygge waterfront, dinner at Vippa (12 min from hotel). Late evening — the fjord at 10pm in still-bright sky is remarkable.<br>
+        <span class="day-badge day-badge-purple">Sun Jul 5</span> <strong>Vigeland Sculpture Park before 10am</strong> — tram 12 from hotel, non-negotiable on a summer Sunday. Fjord island hopping from City Hall pier (12 min walk): Langoyene for swimming, Hovdoya for ruins. Free with Ruter ticket.<br>
+        <span class="day-badge day-badge-purple">Mon Jul 6</span> Grunerloekka morning (Tim Wendelboe, 1 tram stop). MUNCH Museum afternoon. Nordmarka hike or Grefsenkollen — a 7pm hike is entirely reasonable in full July daylight.<br>
+        <span class="day-badge day-badge-purple">Tue Jul 7</span> Bygdoy museums via ferry from City Hall (avoid 11am-2pm). Holmenkollen. Final evening at Territoriet for natural wine, then Theatercafeen if you have not been yet.<br>
+        <span class="day-badge day-badge-purple">Wed Jul 8</span> Daegens cardamom bun before airport. Flytoget from Nationaltheatret (100m, 20 min to OSL).
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-full">
+<div class="section-head"><div class="section-number">01 — Food</div><h3 class="section-title">Where to eat</h3><div class="section-rule rule-osl"></div></div>
+<div class="restaurant-list">
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Historic Restaurant · In your hotel</span><span class="resto-dist">Ground floor of Hotel Continental</span></div><div class="resto-name">Theatercaféen</div><div class="resto-desc">Oslo's most storied café-restaurant, operating since 1900 in your hotel's ground floor. Locals eat here regularly — it's not just a hotel restaurant. Worth one dinner for the old-world atmosphere and authenticity. Book ahead even as a guest.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-fine"></div><div class="resto-body"><div class="resto-meta"><span>Two Michelin Stars · Bjørvika</span><span class="resto-dist">20 min walk or tram</span></div><div class="resto-name">Kontrast</div><div class="resto-desc">New Nordic tasting menu. Earned its second Michelin star in 2024. Elegant without being stiff. Take the tram toward the Opera House. Book well in advance.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Neighborhood Gem · Torshov</span><span class="resto-dist">Tram 11/12 + short walk, ~20 min</span></div><div class="resto-name">Liminal</div><div class="resto-desc">Sustainable tasting menu with produce from their own farm. Counter seats give kitchen views. Ask for second helpings of ice cream — they'll say yes. One tram stop past Grünerløkka into Torshov.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-coffee"></div><div class="resto-body"><div class="resto-meta"><span>Coffee Institution · Grünerløkka</span><span class="resto-dist">1 tram stop from hotel (11 or 12)</span></div><div class="resto-name">Tim Wendelboe</div><div class="resto-desc">2004 World Barista Champion. Tiny, precise, brilliant. One tram stop from the hotel — the most accessible world-class coffee on the trip. Frozen Cappuccino Al Freddo in summer is non-negotiable.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-coffee"></div><div class="resto-body"><div class="resto-meta"><span>Coffee · Grünerløkka</span><span class="resto-dist">1 tram stop from hotel</span></div><div class="resto-name">Supreme Roastworks</div><div class="resto-desc">Also one tram stop away in Grünerløkka. Locals debate whether Tim Wendelboe or Supreme is better. Try both — they're in the same neighborhood.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Bakery · Lilleborg</span><span class="resto-dist">2 tram stops from hotel</span></div><div class="resto-name">Daegens</div><div class="resto-desc">Possibly the best cardamom bun in Norway. Owner hand-makes every bun daily. Two tram stops from the hotel. Before 9am — they sell out. Do this instead of the hotel breakfast at least once.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Local · St. Hanshaugen</span><span class="resto-dist">15 min walk or 1 tram stop</span></div><div class="resto-name">Smalhans</div><div class="resto-desc">Simple, delicious, sustainable. Part wine bar, part restaurant. Also the real Harry Hole location from Jo Nesbø's novels. 15-min walk from the hotel or one tram stop.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Norwegian · Bjørvika</span><span class="resto-dist">20 min walk via waterfront</span></div><div class="resto-name">Vaaghals</div><div class="resto-desc">Beautiful Norwegian food without the Michelin price. Walk the waterfront from Aker Brygge past Akershus Festning to Bjørvika — combine with a visit to the Opera House or MUNCH Museum.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-street"></div><div class="resto-body"><div class="resto-meta"><span>Waterfront Food Hall</span><span class="resto-dist">12 min walk along waterfront</span></div><div class="resto-name">Vippa</div><div class="resto-desc">The local's answer to Oslo Street Food. 12-min walk along the waterfront from the hotel. Fjordside, relaxed, diverse vendors. Summer evenings here with Oslofjord views are genuinely excellent.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-local"></div><div class="resto-body"><div class="resto-meta"><span>Budget Local · Grønland</span><span class="resto-dist">Metro 2 stops from Nationaltheatret</span></div><div class="resto-name">Grønland Indian & Middle Eastern</div><div class="resto-desc">Oslo's multicultural neighborhood. Genuine Indian and Middle Eastern food at the city's most affordable prices. Two metro stops from the hotel. Punjab Tandori keeps getting mentioned by locals.</div></div></div>
+<div class="resto-item"><div class="resto-tag tag-wine"></div><div class="resto-body"><div class="resto-meta"><span>Natural Wine Bar</span><span class="resto-dist">15 min walk</span></div><div class="resto-name">Territoriet</div><div class="resto-desc">Best natural wine selection in Oslo. Blind tasting flights with the producer's story per glass. Moody atmosphere. 15-min walk — good start to a Grünerløkka evening, then tram back to the hotel.</div></div></div>
+</div>
+</div>
+
+<div class="content-full">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">02 — Outdoors</div><h3 class="section-title">Scenic activities & must-sees</h3><div class="section-rule rule-osl"></div></div>
+<div class="scenic-grid">
+<div class="scenic-card scenic-card-osl"><div class="scenic-badge">Underrated Hike</div><div class="scenic-name">Grefsenkollen</div><div class="scenic-dist">Bus from Nationaltheatret, ~30 min total</div><div class="scenic-desc">45-min hike from the city edge. Views of Holmenkollen, the skyline, and Oslofjord. Restaurant at the top. Locals do this on weekday evenings. Almost no tourists. Bus from right outside the hotel.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Forest · 30 min from hotel</div><div class="scenic-name">Nordmarka</div><div class="scenic-dist">T-bane to Sognsvann or Frognerseteren from Nationaltheatret</div><div class="scenic-desc">Vast forested highland accessible by T-bane from your hotel station. Hiking in summer, cross-country skiing in winter. Where Oslo locals disappear on weekends. Free, beautiful, and enormous.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Island Hopping · Free with transit</div><div class="scenic-name">Oslofjord Islands</div><div class="scenic-dist">12 min walk to City Hall ferry pier</div><div class="scenic-desc">Covered by your Ruter transit ticket. Walk 12 min from the hotel to the City Hall pier. Hovedøya (monastery ruins), Langøyene (best swimming), Gressholmen (peaceful). The local summer escape that costs nothing.</div></div>
+<div class="scenic-card scenic-card-osl"><div class="scenic-badge">Ski Jump + Views</div><div class="scenic-name">Holmenkollen</div><div class="scenic-dist">T-bane line 1 from Nationaltheatret, ~25 min</div><div class="scenic-desc">Iconic ski jump with museum and observation deck. Direct T-bane from the hotel station. Views of the city and Oslofjord are excellent in every season. Go late morning to avoid coach groups.</div></div>
+<div class="scenic-card scenic-card-osl"><div class="scenic-badge">Museum Peninsula</div><div class="scenic-name">Bygdøy</div><div class="scenic-dist">Walk 12 min to City Hall, take ferry</div><div class="scenic-desc">Viking Ship Museum (reopens 2027), Fram polar ship, Norwegian Folk Museum. Take the City Hall ferry — 12 min walk from the hotel, and arriving by water is the right way. Avoid 11am–2pm in summer.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Medieval Fortress · Free</div><div class="scenic-name">Akershus Festning</div><div class="scenic-dist">15 min walk along waterfront</div><div class="scenic-desc">Dating to 1299. Free to walk the exterior. Stunning harbor views. Walk along the waterfront from Aker Brygge — combine with Vippa for lunch and the fortress on the same afternoon.</div></div>
+<div class="scenic-card scenic-card-dark"><div class="scenic-badge">Sculpture Park · Free</div><div class="scenic-name">Vigeland Sculpture Park</div><div class="scenic-dist">Tram 12 from Nationaltheatret, 15 min</div><div class="scenic-desc">200+ sculptures by Vigeland. Free, year-round. Tram 12 from right outside the hotel. Arrive before 10am on weekends. Extraordinary when quiet — genuinely unmissable if timed right.</div></div>
+<div class="scenic-card scenic-card-osl"><div class="scenic-badge">Art Museum</div><div class="scenic-name">MUNCH Museum</div><div class="scenic-dist">Tram or 20 min walk via Opera House</div><div class="scenic-desc">Largest Munch collection in the world. Walk via the Opera House waterfront for the best approach — the building is dramatic from the fjord side. Don't skip the permanent collection.</div></div>
+</div>
+</div>
+
+<div class="content-full">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">03 — Neighborhoods</div><h3 class="section-title">Where to spend your time</h3><div class="section-rule rule-osl"></div></div>
+<div class="spots-grid">
+<div class="spot-card"><div class="spot-type">One tram stop from hotel</div><div class="spot-name">Grünerløkka</div><div class="spot-desc">Oslo's bohemian creative neighborhood. Indie cafés, vintage shops, street art, live music, craft beer. Tim Wendelboe and Supreme Roastworks are here. Tram 11 or 12 from Nationaltheatret — your most-used route.</div></div>
+<div class="spot-card"><div class="spot-type">2 metro stops</div><div class="spot-name">Grønland</div><div class="spot-desc">Diverse, affordable, genuinely local. Best cheap food in the city. Two metro stops from the hotel. Good for lunch or a low-key evening alternative to Grünerløkka.</div></div>
+<div class="spot-card"><div class="spot-type">10 min walk</div><div class="spot-name">Aker Brygge waterfront</div><div class="spot-desc">Good for an evening stroll with fjord views — just don't eat at the restaurants here. Walk here, then continue to Vippa or Akershus Festning. The waterfront walk from the hotel is scenic in any weather.</div></div>
+<div class="spot-card"><div class="spot-type">In your hotel</div><div class="spot-name">Theatercaféen</div><div class="spot-desc">Oslo's most storied restaurant, ground floor of Hotel Continental. Locals eat here — not just hotel guests. Book ahead even as a guest. One justified dinner in-house.</div></div>
+</div>
+</div>
+
+<div class="content-wide">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">04 — Behavior</div><h3 class="section-title">Unwritten rules</h3><div class="section-rule rule-osl"></div></div>
+<div class="rules-grid">
+<div class="rule-item"><span class="rule-icon">🌲</span><div class="rule-headline">Friluftsliv is a cultural identity</div><div class="rule-text">Outdoor life isn't a hobby — it's existential. Sundays mean a Søndagstur (Sunday hike) regardless of weather. Nordmarka is a T-bane ride from your hotel. Participate rather than observe.</div></div>
+<div class="rule-item"><span class="rule-icon">⚖️</span><div class="rule-headline">Janteloven governs social behavior</div><div class="rule-text">Don't boast, don't perform, don't expect special treatment. Norwegians value collective equality over individual display. Humility is the default register — it applies to visitors too.</div></div>
+<div class="rule-item"><span class="rule-icon">🕑</span><div class="rule-headline">Punctuality is serious</div><div class="rule-text">If you say 2pm, be there at 2pm. Being late is disrespectful, not casual. Build transit time into your plans. Nationaltheatret is fast, but don't assume zero buffer.</div></div>
+<div class="rule-item"><span class="rule-icon">🤝</span><div class="rule-headline">Norwegians are reserved — not unfriendly</div><div class="rule-text">Don't mistake quiet for coldness. No uninvited physical contact. Avoid personal questions (money, relationships, religion) with people you've just met. Good topics: nature, weather, travel, sports.</div></div>
+<div class="rule-item"><span class="rule-icon">🍃</span><div class="rule-headline">Leave no trace</div><div class="rule-text">Trail litter is close to a moral failing here. Stay on marked paths. Fishing in the inner Oslofjord is now prohibited from January 2026 — recreationally and commercially.</div></div>
+<div class="rule-item"><span class="rule-icon">💸</span><div class="rule-headline">Oslo is expensive — plan accordingly</div><div class="rule-text">Beer: 90–120 NOK. Cocktails: 150–200 NOK. Use the Oslo Pass for multiple museums. First Sunday of the month many museums are free. Your Ruter transit ticket covers the fjord island ferries.</div></div>
+<div class="rule-item"><span class="rule-icon">🎫</span><div class="rule-headline">Buy transit tickets before boarding</div><div class="rule-text">You cannot pay on trams or buses. Download the Ruter app before leaving the hotel. Tram 12 and 11 depart from directly outside. Inspectors check regularly and fines are steep.</div></div>
+<div class="rule-item"><span class="rule-icon">🕘</span><div class="rule-headline">Vigeland Park before 10am on weekends</div><div class="rule-text">After 10am it's tour groups. Tram 12 from Nationaltheatret gets you there in 15 min — set the alarm. Genuinely extraordinary when quiet. Don't miss it by being 30 min late.</div></div>
+</div>
+</div>
+
+<div class="content-half">
+<hr class="section-divider">
+<div class="section-head"><div class="section-number">05 — Avoid</div><h3 class="section-title">Tourist traps</h3><div class="section-rule rule-osl"></div></div>
+<div class="traps-list">
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Oslo Street Food market</div><div class="trap-desc">Overhyped, overpriced, designed for tourists. Go to Vippa instead — 12-min walk from the hotel along the waterfront, same variety, better fjord setting, lower prices.</div></div></div>
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Aker Brygge restaurants</div><div class="trap-desc">Tourist prices, no local credibility. The waterfront walk past here is great — just don't eat. Continue to Vippa or Akershus Festning instead.</div></div></div>
+<div class="trap-card"><div class="trap-x">✕</div><div class="trap-body"><div class="trap-name">Bygdøy museums at 11am–2pm in summer</div><div class="trap-desc">Cruise ships dump crowds into these museums at peak hours. Take the ferry early, arrive at 9am, or go on a weekday afternoon. The experience difference is not subtle.</div></div></div>
+</div>
+</div>
+
+</div></div>
 </section>
 
 <footer>
-  <div><strong>Scandinavia Field Guide</strong> — Copenhagen · Bergen · Oslo</div>
-  <div>Compiled from local Instagram creators & verified 2024–2026 sources</div>
+<div><strong>Scandinavia Field Guide</strong> — Copenhagen · Bergen · Oslo</div>
+<div>NH Collection CPH &nbsp;·&nbsp; Hotel No. 13 Bergen &nbsp;·&nbsp; Flåmsbrygga Hotell &nbsp;·&nbsp; Hotel Continental Oslo &nbsp;·&nbsp; Jun 26 – Jul 8, 2026</div>
 </footer>
 
 </body>
